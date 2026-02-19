@@ -1,5 +1,5 @@
 <?php
-        error_reporting(E_ALL);
+	error_reporting(E_ALL);
 	// Not everyone will have the ability to (or, let's face it, attention span) set the PHP directive session.auto_start = 1
 	// so we will simply start a session here (which will not cause any issues if auto_start is already set to 1) unless
 	// we are being invoked from the command line
@@ -11,25 +11,18 @@
 	// Set to true if you want to skip the installer check
 	$devMode = false;
 
-	// Docker environment variables - try multiple methods
-	function get_env_var($name, $default) {
-		// Try getenv()
-		$value = getenv($name);
-		if ($value !== false) return $value;
-		
-		// Try $_ENV
-		if (isset($_ENV[$name])) return $_ENV[$name];
-		
-		// Try $_SERVER
-		if (isset($_SERVER[$name])) return $_SERVER[$name];
-		
-		return $default;
-	}
+	// Docker environment configuration
+	// Try environment variables first, fall back to Docker defaults
+	$dbhost = 'db';
+	$dbname = 'dcim';
+	$dbuser = 'dcim';
+	$dbpass = 'dcim_secret';
 
-	$dbhost = get_env_var('DB_HOST', 'db');
-	$dbname = get_env_var('DB_NAME', 'dcim');
-	$dbuser = get_env_var('DB_USER', 'dcim');
-	$dbpass = get_env_var('DB_PASS', 'dcim_secret');
+	// Override with environment variables if available
+	if (getenv('DB_HOST')) $dbhost = getenv('DB_HOST');
+	if (getenv('DB_NAME')) $dbname = getenv('DB_NAME');
+	if (getenv('DB_USER')) $dbuser = getenv('DB_USER');
+	if (getenv('DB_PASS')) $dbpass = getenv('DB_PASS');
 
 	$locale = "en_US";
 	$codeset = "UTF-8";
