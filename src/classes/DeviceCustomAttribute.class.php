@@ -163,7 +163,7 @@ class DeviceCustomAttribute {
 			FROM fac_devicecustomattribute
 			WHERE AttributeID=$this->AttributeID;";
 
-		if($dcaRow=$dbh->query($sql)->fetch()) {
+		if ( $dcaRow = ($result_dcaRow = $dbh->query($sql)) ? $result_dcaRow->fetch() : array() ) {
 			foreach(DeviceCustomAttribute::RowToObject($dcaRow) as $prop => $value) {
 				$this->$prop=$value;
 			}

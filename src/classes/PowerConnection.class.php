@@ -140,7 +140,7 @@ class PowerConnection {
 		$sql="SELECT * FROM fac_PowerConnection WHERE PDUID=$this->PDUID AND 
 			PDUPosition=\"$this->PDUPosition\";";
     
-		if($row=$dbh->query($sql)->fetch()){
+		if ( $row = ($result_row = $dbh->query($sql)) ? $result_row->fetch() : array() ){
 			foreach(PowerConnection::RowToObject($row) as $prop => $value){
 				$this->$prop=$value;
 			}

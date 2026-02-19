@@ -455,7 +455,8 @@ class LogActions {
             $sql="SELECT COUNT(*) as total_logs FROM fac_GenericLog WHERE UserID!='' {$incr};";
             
             $RowsList = array();
-            $RowsList = $dbh->query($sql)->fetch();
+            $result_RowsList = $dbh->query($sql);
+            $RowsList = $result_RowsList ? $result_RowsList->fetch() : array();
             
             return $RowsList;
 	}

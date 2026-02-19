@@ -55,7 +55,7 @@ class PowerPorts {
 
 		$sql="SELECT * FROM fac_PowerPorts WHERE DeviceID=$this->DeviceID AND PortNumber=$this->PortNumber;";
 
-		if(!$row=$dbh->query($sql)->fetch()){
+		if(!$row=($result_row=$dbh->query($sql))?$result_row->fetch():array()){
 			return false;
 		}else{
 			foreach(PowerPorts::RowToObject($row) as $prop => $value){

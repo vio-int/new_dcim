@@ -139,7 +139,8 @@ class Location {
             $sql="SELECT count(*) as total_location FROM location";
             
             $LocationList= array();
-            $LocationList = $dbh->query($sql)->fetch();
+            $result_LocationList = $dbh->query($sql);
+            $LocationList = $result_LocationList ? $result_LocationList->fetch() : array();
             
             return $LocationList;
 	}

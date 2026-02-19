@@ -210,7 +210,8 @@ class ClusterGroup {
             $sql="SELECT count(*) as total_group FROM cluster_group WHERE is_deleted='N'";
             
             $ClusterGroupList = array();
-            $ClusterGroupList = $dbh->query($sql)->fetch();
+            $result_ClusterGroupList = $dbh->query($sql);
+            $ClusterGroupList = $result_ClusterGroupList ? $result_ClusterGroupList->fetch() : array();
             
             return $ClusterGroupList;
 	}

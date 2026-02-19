@@ -261,7 +261,8 @@ class IdracSetting {
                 WHERE v.is_deleted='N'";
             
             $IdracSettingList = array();
-            $IdracSettingList = $dbh->query($sql)->fetch();
+            $result_IdracSettingList = $dbh->query($sql);
+            $IdracSettingList = $result_IdracSettingList ? $result_IdracSettingList->fetch() : array();
             
             return $IdracSettingList;
 	}

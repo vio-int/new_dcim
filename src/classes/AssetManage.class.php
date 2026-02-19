@@ -321,7 +321,8 @@ class AssetManage {
                 LEFT JOIN department dp ON(dp.id=a.department_id) WHERE a.is_deleted='N'";
             
             $AssetManageList = array();
-            $AssetManageList = $dbh->query($sql)->fetch();
+            $result_AssetManageList = $dbh->query($sql);
+            $AssetManageList = $result_AssetManageList ? $result_AssetManageList->fetch() : array();
             
             return $AssetManageList;
 	}

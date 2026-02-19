@@ -268,7 +268,8 @@ class AssetSupplier {
                 WHERE a.is_deleted='N'";
             
             $AssetList = array();
-            $AssetList = $dbh->query($sql)->fetch();
+            $result_AssetList = $dbh->query($sql);
+            $AssetList = $result_AssetList ? $result_AssetList->fetch() : array();
             
             return $AssetList;
 	}

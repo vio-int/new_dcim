@@ -69,7 +69,7 @@ class SensorTemplate {
 
 		$sql="SELECT * FROM fac_SensorTemplate WHERE TemplateID=$this->TemplateID;";
 
-		if($sensorRow=$dbh->query($sql)->fetch()){
+		if ( $sensorRow = ($result_sensorRow = $dbh->query($sql)) ? $result_sensorRow->fetch() : array() ){
 			foreach(SensorTemplate::RowToObject($sensorRow) as $prop => $value){
 				$this->$prop=$value;
 			}

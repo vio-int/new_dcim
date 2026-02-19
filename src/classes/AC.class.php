@@ -181,7 +181,7 @@ class AC {
 		
 		$sql="SELECT * FROM fac_ac WHERE ACID=$this->ACID;";
 		
-		if($acRow=$dbh->query($sql)->fetch()){
+		if ( $acRow = ($result_acRow = $dbh->query($sql)) ? $result_acRow->fetch() : array() ){
 			foreach(AC::RowToObject($acRow) as $prop => $value){
 				$this->$prop=$value;
 			}
@@ -299,7 +299,7 @@ class AC {
 	// 	//JMGA halfdepth height calculation
 	// 	$sql = "select sum(if(HalfDepth,Height/2,Height)) as Occupancy from fac_device where ParentDevice=0 AND Cabinet=$CabinetID";
 
-	// 	if(!$row=$dbh->query($sql)->fetch()){
+	// 	if(!$row=($result_row=$dbh->query($sql))?$result_row->fetch():array()){
 	// 		$info=$dbh->errorInfo();
 
 	// 		error_log("CabinetOccupancy::PDO Error: {$info[2]} SQL=$sql");
@@ -354,7 +354,8 @@ class AC {
 			MAX(MapY2) AS MapY2, AVG(MapX1) AS AvgX1, AVG(MapX2) AS AvgX2, COUNT(*) AS 
 			ACCount FROM fac_ac WHERE CabRowID=$cabrow->CabRowID AND MapX1>0 
 			AND MapX2>0 AND MapY1>0 and MapY2>0;";
-		$shape=$dbh->query($sql)->fetch();
+		$result_shape = $dbh->query($sql);
+		$shape = $result_shape ? $result_shape->fetch() : array();
 
 		// size of average cabinet
 		$sX=$shape["AvgX2"]-$shape["AvgX1"];

@@ -87,7 +87,8 @@ class FacPowAtt {
 		$this->MakeSafe();
 
 		$sql_cek = "SELECT COUNT(DataCenterID) AS jml FROM fac_PowAtt WHERE DataCenterID='$this->DataCenterID'";
-		$row = $dbh->query($sql_cek)->fetch();
+		$result_row = $dbh->query($sql_cek);
+		$row = $result_row ? $result_row->fetch() : array();
 		$jml = $row["jml"];
 
 		if ($jml<1) {
@@ -141,7 +142,7 @@ class FacPowAtt {
 		
 		$sql="SELECT * FROM fac_PowAtt WHERE PowAttID='$this->PowAttID'";
 		
-		if($powattidRow=$dbh->query($sql)->fetch()){
+		if ( $powattidRow = ($result_powattidRow = $dbh->query($sql)) ? $result_powattidRow->fetch() : array() ){
 			foreach(FacPowAtt::RowToObject($powattidRow) as $prop => $value){
 				$this->$prop=$value;
 			}

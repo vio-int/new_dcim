@@ -169,7 +169,7 @@ class PowerDistribution {
 
 		$sql = "select sum(NominalWatts) as TotalWatts from fac_Device where DeviceID in (select ConnectedDeviceID from fac_PowerPorts where DeviceID=" . intval($devID) . ") or ParentDevice in (select ConnectedDeviceID from fac_PowerPorts where DeviceID=" . intval($devID) . ")";
 
-		if ( $row = $dbh->query( $sql, PDO::FETCH_ASSOC )->fetch() ) {
+		if ( $row = ($result_row = $dbh->query($sql, PDO::FETCH_ASSOC)) ? $result_row->fetch() : array() ) {
 			return $row["TotalWatts"];
 		} else {
 			return 0;

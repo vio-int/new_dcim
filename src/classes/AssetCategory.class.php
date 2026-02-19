@@ -201,7 +201,8 @@ class AssetCategory {
             $sql="SELECT count(*) as total_category FROM asset_category WHERE is_deleted='N'";
             
             $IpamGroupList = array();
-            $IpamGroupList = $dbh->query($sql)->fetch();
+            $result_IpamGroupList = $dbh->query($sql);
+            $IpamGroupList = $result_IpamGroupList ? $result_IpamGroupList->fetch() : array();
             
             return $IpamGroupList;
 	}

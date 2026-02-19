@@ -83,7 +83,7 @@ class Supplies {
 		
 		$sql = "select sum(Count) as TotalQty from fac_BinContents where SupplyID=" . intval( $SupplyID );
 		
-		if ( $row=$dbh->query($sql)->fetch()) {
+		if ( $row = ($result_row = $dbh->query($sql)) ? $result_row->fetch() : array() ) {
 			return $row["TotalQty"];
 		} else {
 			return 0;

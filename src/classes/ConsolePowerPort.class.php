@@ -180,7 +180,8 @@ class ConsolePowerPort {
                 WHERE v.is_deleted='N'";
             
             $ConsolePowerPortList = array();
-            $ConsolePowerPortList = $dbh->query($sql)->fetch();
+            $result_ConsolePowerPortList = $dbh->query($sql);
+            $ConsolePowerPortList = $result_ConsolePowerPortList ? $result_ConsolePowerPortList->fetch() : array();
             
             return $ConsolePowerPortList;
 	}

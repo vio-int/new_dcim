@@ -230,7 +230,8 @@ class InterfaceConn {
                 WHERE v.is_deleted='N'";
             
             $InterfaceConnList = array();
-            $InterfaceConnList = $dbh->query($sql)->fetch();
+            $result_InterfaceConnList = $dbh->query($sql);
+            $InterfaceConnList = $result_InterfaceConnList ? $result_InterfaceConnList->fetch() : array();
             
             return $InterfaceConnList;
 	}

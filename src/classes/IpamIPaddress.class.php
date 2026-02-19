@@ -311,7 +311,8 @@ class IpamIPaddress {
                 LEFT JOIN ipam_vrf v ON(v.id=a.vrf_id) WHERE a.is_deleted='N'";
             
             $IpamIpaddressList = array();
-            $IpamIpaddressList = $dbh->query($sql)->fetch();
+            $result_IpamIpaddressList = $dbh->query($sql);
+            $IpamIpaddressList = $result_IpamIpaddressList ? $result_IpamIpaddressList->fetch() : array();
             
             return $IpamIpaddressList;
 	}

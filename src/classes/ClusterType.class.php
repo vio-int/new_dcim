@@ -210,7 +210,8 @@ class ClusterType {
             $sql="SELECT count(*) as total_type FROM cluster_type WHERE is_deleted='N'";
             
             $ClusterTypeList = array();
-            $ClusterTypeList = $dbh->query($sql)->fetch();
+            $result_ClusterTypeList = $dbh->query($sql);
+            $ClusterTypeList = $result_ClusterTypeList ? $result_ClusterTypeList->fetch() : array();
             
             return $ClusterTypeList;
 	}

@@ -209,7 +209,8 @@ class IpamRIR {
             $sql="SELECT count(*) as total_rir FROM ipam_rir WHERE is_deleted='N'";
             
             $IpamRIRList = array();
-            $IpamRIRList = $dbh->query($sql)->fetch();
+            $result_IpamRIRList = $dbh->query($sql);
+            $IpamRIRList = $result_IpamRIRList ? $result_IpamRIRList->fetch() : array();
             
             return $IpamRIRList;
 	}

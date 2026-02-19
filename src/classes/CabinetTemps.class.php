@@ -22,7 +22,7 @@ class CabinetTemps {
 		
 		$sql = sprintf( "select * from fac_cabinettemps where CabinetID=%d", $this->CabinetID );
 		
-		if ( $row = $dbh->query( $sql )->fetch() ) {
+		if ( $row = ($result_row = $dbh->query($sql)) ? $result_row->fetch() : array() ) {
 			$this->LastRead = date( "m-d-Y H:i:s", strtotime($row["LastRead"]) );
 			$Temp = $row["Temp"];
 			$Humidity = $row["Humidity"];

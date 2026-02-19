@@ -60,7 +60,7 @@ class TemplatePowerPorts {
 
 		$sql="SELECT * FROM fac_TemplatePowerPorts WHERE TemplateID=$this->TemplateID AND PortNumber=$this->PortNumber;";
 
-		if(!$row=$dbh->query($sql)->fetch()){
+		if(!$row=($result_row=$dbh->query($sql))?$result_row->fetch():array()){
 			return false;
 		}else{
 			foreach(TemplatePowerPorts::RowToObject($row) as $prop => $value){

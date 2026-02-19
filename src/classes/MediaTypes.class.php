@@ -61,7 +61,7 @@ class MediaTypes {
 		
 		$sql="SELECT * FROM fac_MediaTypes WHERE MediaID=".intval($this->MediaID);
 		
-		if(!$row=$dbh->query($sql)->fetch()){
+		if(!$row=($result_row=$dbh->query($sql))?$result_row->fetch():array()){
 			return false;
 		}else{
 			$this->MediaType = $row["MediaType"];
@@ -76,7 +76,7 @@ class MediaTypes {
 		
 		$sql="SELECT * FROM fac_MediaTypes WHERE MediaType='".sanitize($this->MediaType)."';";
 		
-		if(!$row=$dbh->query($sql)->fetch()){
+		if(!$row=($result_row=$dbh->query($sql))?$result_row->fetch():array()){
 			return false;
 		}else{
 			$this->MediaID = $row["MediaID"];

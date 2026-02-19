@@ -34,7 +34,7 @@ class CabinetAudit {
 		
 		$sql = "select * from fac_genericlog where ObjectID=\"" . intval( $this->CabinetID ) . "\" and Class=\"CabinetAudit\" order by Time DESC Limit 1";
 
-		if($row=$dbh->query($sql)->fetch()){
+		if ( $row = ($result_row = $dbh->query($sql)) ? $result_row->fetch() : array() ){
 			$this->CabinetID=$row["ObjectID"];
 			$this->UserID=$row["UserID"];
 			$this->AuditStamp=date("M d, Y H:i", strtotime($row["Time"]));
@@ -51,7 +51,7 @@ class CabinetAudit {
 				
 		$sql = "select * from fac_genericlog where UserID=\"" . addslashes( $this->UserID ) . "\" and Class=\"CabinetAudit\" order by Time DESC Limit 1";
 
-		if ( $row = $dbh->query( $sql )->fetch() ) {
+		if ( $row = ($result_row = $dbh->query($sql)) ? $result_row->fetch() : array() ) {
 			$this->CabinetID = $row["ObjectID"];
 			$this->UserID = $row["UserID"];
 			$this->AuditStamp = date( "M d, Y H:i", strtotime( $row["Time"] ) );

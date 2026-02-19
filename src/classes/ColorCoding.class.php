@@ -68,7 +68,7 @@ class ColorCoding {
 		
 		$sql="SELECT * FROM fac_colorcoding WHERE ColorID=".intval($this->ColorID);
 
-		if($row=$dbh->query($sql)->fetch()){
+		if ( $row = ($result_row = $dbh->query($sql)) ? $result_row->fetch() : array() ){
 			$this->Name=$row["Name"];
 			$this->DefaultNote=$row["DefaultNote"];
 		}else{
@@ -83,7 +83,7 @@ class ColorCoding {
 		
 		$sql="SELECT * FROM fac_colorcoding WHERE Name='".transform($this->Name)."';";
 
-		if($row=$dbh->query($sql)->fetch()){
+		if ( $row = ($result_row = $dbh->query($sql)) ? $result_row->fetch() : array() ){
 			$this->ColorID=$row["ColorID"];
 			$this->DefaultNote=$row["DefaultNote"];
 		}else{

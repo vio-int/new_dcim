@@ -271,7 +271,8 @@ class Model {
                 WHERE a.is_deleted='N'";
             
             $ModelList = array();
-            $ModelList = $dbh->query($sql)->fetch();
+            $result_ModelList = $dbh->query($sql);
+            $ModelList = $result_ModelList ? $result_ModelList->fetch() : array();
             
             return $ModelList;
 	}

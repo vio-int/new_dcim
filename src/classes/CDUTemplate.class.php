@@ -104,7 +104,7 @@ class CDUTemplate {
 		
 		$sql="SELECT * FROM fac_cdutemplate WHERE TemplateID=$this->TemplateID";
 
-		if($row=$dbh->query($sql)->fetch()){
+		if ( $row = ($result_row = $dbh->query($sql)) ? $result_row->fetch() : array() ){
 			foreach(CDUTemplate::RowToObject($row) as $prop => $value){
 				$this->$prop=$value;
 			}

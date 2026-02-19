@@ -242,7 +242,8 @@ class IpamPrefixRole {
             $sql="SELECT count(*) as total_role FROM ipam_role WHERE is_deleted='N'";
             
             $IpamRoleList = array();
-            $IpamRoleList = $dbh->query($sql)->fetch();
+            $result_IpamRoleList = $dbh->query($sql);
+            $IpamRoleList = $result_IpamRoleList ? $result_IpamRoleList->fetch() : array();
             
             return $IpamRoleList;
 	}

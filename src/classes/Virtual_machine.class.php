@@ -310,7 +310,8 @@ class Virtual_machine {
                 WHERE a.is_deleted='N'";
             
             $AggreegetList = array();
-            $AggreegetList = $dbh->query($sql)->fetch();
+            $result_AggreegetList = $dbh->query($sql);
+            $AggreegetList = $result_AggreegetList ? $result_AggreegetList->fetch() : array();
             
             return $AggreegetList;
 	}

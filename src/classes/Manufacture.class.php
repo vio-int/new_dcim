@@ -145,7 +145,8 @@ class Manufacture {
             $sql="SELECT count(*) as total_role FROM manufacture";
             
             $IpamRoleList = array();
-            $IpamRoleList = $dbh->query($sql)->fetch();
+            $result_IpamRoleList = $dbh->query($sql);
+            $IpamRoleList = $result_IpamRoleList ? $result_IpamRoleList->fetch() : array();
             
             return $IpamRoleList;
 	}

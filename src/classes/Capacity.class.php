@@ -361,7 +361,8 @@ class Capacity {
             }
             
             $GenrList = array();
-            $GenrList = $dbh->query($sql)->fetch();
+            $result_GenrList = $dbh->query($sql);
+            $GenrList = $result_GenrList ? $result_GenrList->fetch() : array();
             
             return $GenrList;
         }
@@ -378,7 +379,8 @@ class Capacity {
                 WHERE a.is_deleted='N'";
             
             $IpamIpaddressList = array();
-            $IpamIpaddressList = $dbh->query($sql)->fetch();
+            $result_IpamIpaddressList = $dbh->query($sql);
+            $IpamIpaddressList = $result_IpamIpaddressList ? $result_IpamIpaddressList->fetch() : array();
             
             return $IpamIpaddressList;
 	}
@@ -396,7 +398,8 @@ class Capacity {
                 WHERE l.is_deleted='N' ".$incr."";
             
             $LocationList = array();
-            $LocationList = $dbh->query($sql)->fetch();
+            $result_LocationList = $dbh->query($sql);
+            $LocationList = $result_LocationList ? $result_LocationList->fetch() : array();
             
             return $LocationList;
 	}
@@ -412,7 +415,8 @@ class Capacity {
                 WHERE r.is_deleted='N' ".$incr."";
             
             $LocationList = array();
-            $LocationList = $dbh->query($sql)->fetch();
+            $result_LocationList = $dbh->query($sql);
+            $LocationList = $result_LocationList ? $result_LocationList->fetch() : array();
             
             return $LocationList;
 	}
@@ -428,7 +432,8 @@ class Capacity {
                 WHERE r.is_deleted='N' AND r.is_simulation='N' ".$incr."";
             
             $LocationList = array();
-            $LocationList = $dbh->query($sql)->fetch();
+            $result_LocationList = $dbh->query($sql);
+            $LocationList = $result_LocationList ? $result_LocationList->fetch() : array();
             
             return $LocationList;
 	}
@@ -444,7 +449,8 @@ class Capacity {
                 WHERE d.is_deleted='N' AND d.is_simulation='N' ".$incr."";
             
             $LocationList = array();
-            $LocationList = $dbh->query($sql)->fetch();
+            $result_LocationList = $dbh->query($sql);
+            $LocationList = $result_LocationList ? $result_LocationList->fetch() : array();
             
             return $LocationList;
 	}

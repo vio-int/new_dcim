@@ -161,7 +161,8 @@ class ConsoleServer {
                 WHERE v.is_deleted='N'";
             
             $ConsoleServerList = array();
-            $ConsoleServerList = $dbh->query($sql)->fetch();
+            $result_ConsoleServerList = $dbh->query($sql);
+            $ConsoleServerList = $result_ConsoleServerList ? $result_ConsoleServerList->fetch() : array();
             
             return $ConsoleServerList;
 	}

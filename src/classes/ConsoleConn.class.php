@@ -249,7 +249,8 @@ class ConsoleConn {
                 WHERE v.is_deleted='N'";
             
             $ConsoleConnList = array();
-            $ConsoleConnList = $dbh->query($sql)->fetch();
+            $result_ConsoleConnList = $dbh->query($sql);
+            $ConsoleConnList = $result_ConsoleConnList ? $result_ConsoleConnList->fetch() : array();
             
             return $ConsoleConnList;
 	}

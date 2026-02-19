@@ -141,7 +141,7 @@ class RackRequest {
 	global $dbh;
     $sql="SELECT * FROM fac_RackRequest WHERE RequestID=\"".intval($this->RequestID)."\";";
 
-	if($row=$dbh->query($sql)->fetch()){
+	if ( $row = ($result_row = $dbh->query($sql)) ? $result_row->fetch() : array() ){
 		$this->RequestorID=$row["RequestorID"];
 		$this->RequestTime=$row["RequestTime"];
 		$this->CompleteTime=$row["CompleteTime"];

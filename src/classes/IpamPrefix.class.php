@@ -324,7 +324,8 @@ class IpamPrefix {
                 LEFT JOIN ipam_vlan vl ON(vl.id=p.vlan_id) WHERE p.is_deleted='N'";
             
             $IpamPrefixList = array();
-            $IpamPrefixList = $dbh->query($sql)->fetch();
+            $result_IpamPrefixList = $dbh->query($sql);
+            $IpamPrefixList = $result_IpamPrefixList ? $result_IpamPrefixList->fetch() : array();
             
             return $IpamPrefixList;
 	}

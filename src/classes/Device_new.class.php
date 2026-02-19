@@ -451,7 +451,8 @@ class Device_new {
             $sql="SELECT room_id as roomID FROM rack WHERE id=".$rack_id;
             
             $RackList = array();
-            $RackList = $dbh->query($sql)->fetch();
+            $result_RackList = $dbh->query($sql);
+            $RackList = $result_RackList ? $result_RackList->fetch() : array();
             
             return $RackList;
         }

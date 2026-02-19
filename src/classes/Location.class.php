@@ -295,13 +295,16 @@ class Location {
             $RowList['total_device'] = $device_result ? $device_result->fetch() : array('total_device' => 0);
             
             $prefix_sql="SELECT COUNT(*) as total_prefix FROM ipam_prefix WHERE is_deleted='N' ".$incr."";
-            $RowList['total_prefix'] = $dbh->query($prefix_sql)->fetch();
+            $prefix_result = $dbh->query($prefix_sql);
+            $RowList['total_prefix'] = $prefix_result ? $prefix_result->fetch() : array('total_prefix' => 0);
             
             $vlan_sql="SELECT COUNT(*) as total_vlan FROM ipam_vlan WHERE is_deleted='N' ".$incr."";
-            $RowList['total_vlan'] = $dbh->query($vlan_sql)->fetch();
+            $vlan_result = $dbh->query($vlan_sql);
+            $RowList['total_vlan'] = $vlan_result ? $vlan_result->fetch() : array('total_vlan' => 0);
             
             $machine_sql="SELECT COUNT(*) as total_machine FROM virtual_machine v JOIN cluster c ON (c.id=v.cluster_id) WHERE v.is_deleted='N' ".$incr."";
-            $RowList['total_machine'] = $dbh->query($machine_sql)->fetch();
+            $machine_result = $dbh->query($machine_sql);
+            $RowList['total_machine'] = $machine_result ? $machine_result->fetch() : array('total_machine' => 0);
             
             return $RowList;
 	}

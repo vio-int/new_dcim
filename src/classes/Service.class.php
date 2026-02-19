@@ -264,7 +264,8 @@ class Service {
                 WHERE s.is_deleted='N';";
             
             $ServiceList = array();
-            $ServiceList = $dbh->query($sql)->fetch();
+            $result_ServiceList = $dbh->query($sql);
+            $ServiceList = $result_ServiceList ? $result_ServiceList->fetch() : array();
             
             return $ServiceList;
 	}

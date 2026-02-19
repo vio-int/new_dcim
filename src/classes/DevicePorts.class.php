@@ -61,7 +61,7 @@ class DevicePorts {
 
 		$sql="SELECT * FROM fac_ports WHERE DeviceID=$this->DeviceID AND PortNumber=$this->PortNumber;";
 
-		if(!$row=$dbh->query($sql)->fetch()){
+		if(!$row=($result_row=$dbh->query($sql))?$result_row->fetch():array()){
 			return false;
 		}else{
 			foreach(DevicePorts::RowToObject($row) as $prop => $value){
@@ -96,7 +96,9 @@ class DevicePorts {
 			
 		$sql = "select count(*) as ActivePorts from fac_ports where DeviceID=$this->DeviceID and (ConnectedDeviceID>0 or Notes > '')";
 		
-		$row = $dbh->query($sql)->fetch();
+		$result_row = $dbh->query($sql);
+		
+		$row = $result_row ? $result_row->fetch() : array();
 
 		return $row["ActivePorts"];
 	}

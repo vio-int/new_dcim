@@ -618,7 +618,8 @@ class Rack {
             $sql="SELECT location_id as locationID FROM room WHERE id=".$room_id;
             
             $RoomList = array();
-            $RoomList = $dbh->query($sql)->fetch();
+            $result_RoomList = $dbh->query($sql);
+            $RoomList = $result_RoomList ? $result_RoomList->fetch() : array();
             
             return $RoomList;
         }

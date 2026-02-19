@@ -238,7 +238,8 @@ class IpamVRF {
             $sql="SELECT count(*) as total_vrf FROM ipam_vrf WHERE is_deleted='N'";
             
             $IpamVRFList = array();
-            $IpamVRFList = $dbh->query($sql)->fetch();
+            $result_IpamVRFList = $dbh->query($sql);
+            $IpamVRFList = $result_IpamVRFList ? $result_IpamVRFList->fetch() : array();
             
             return $IpamVRFList;
 	}

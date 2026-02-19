@@ -221,7 +221,8 @@ class PowerConn {
                 LEFT JOIN device d ON(d.id=v.device_id) WHERE v.is_deleted='N'";
             
             $PowerConnList = array();
-            $PowerConnList = $dbh->query($sql)->fetch();
+            $result_PowerConnList = $dbh->query($sql);
+            $PowerConnList = $result_PowerConnList ? $result_PowerConnList->fetch() : array();
             
             return $PowerConnList;
 	}

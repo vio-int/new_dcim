@@ -948,7 +948,7 @@ class Device {
 		
 		$sql="SELECT * FROM fac_device WHERE DeviceID=$this->DeviceID;";
 
-		if($devRow=$dbh->query($sql)->fetch()){
+		if ( $devRow = ($result_devRow = $dbh->query($sql)) ? $result_devRow->fetch() : array() ){
 			foreach(Device::RowToObject($devRow,$filterrights) as $prop => $value){
 				$this->$prop=$value;
 			}
@@ -2394,7 +2394,7 @@ class Device {
 		$readings=new stdClass();
 
 		$sql="SELECT * FROM fac_sensorreadings WHERE DeviceID=$this->DeviceID LIMIT 1;";
-		if(!$row=$dbh->query($sql)->fetch()){
+		if(!$row=($result_row=$dbh->query($sql))?$result_row->fetch():array()){
 			// Failed to get anything from the db so kick back bad data
 			$readings->DeviceID=$this->DeviceID;
 			$readings->Temperature=0;

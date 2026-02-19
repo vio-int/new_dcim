@@ -63,7 +63,7 @@ class VM {
 
 		$sql="SELECT * FROM fac_VMInventory WHERE VMIndex=$this->VMIndex;";
 
-		if(!$vmRow=$dbh->query($sql)->fetch()){
+		if(!$vmRow=($result_vmRow=$dbh->query($sql))?$result_vmRow->fetch():array()){
 			return false;
 		}else{
 			foreach(VM::RowToObject($vmRow) as $param => $value){

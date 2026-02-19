@@ -316,7 +316,8 @@ class IpamVLAN {
                 LEFT JOIN ipam_role r ON(r.id=v.role_id) WHERE v.is_deleted='N';";
             
             $IpamVLANList = array();
-            $IpamVLANList = $dbh->query($sql)->fetch();
+            $result_IpamVLANList = $dbh->query($sql);
+            $IpamVLANList = $result_IpamVLANList ? $result_IpamVLANList->fetch() : array();
             
             return $IpamVLANList;
 	}

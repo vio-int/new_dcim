@@ -157,7 +157,8 @@ class Simulation {
             $SiteList = array();
             if($incr1 != "")
             {
-                $SiteList = $dbh->query($location_sql)->fetch();
+                $result_SiteList = $dbh->query($location_sql);
+                $SiteList = $result_SiteList ? $result_SiteList->fetch() : array();
             }
             
             $room_sql = "SELECT 
@@ -170,7 +171,8 @@ class Simulation {
             $RoomList = array();
             if($incr2 != "")
             {
-                $RoomList = $dbh->query($room_sql)->fetch();
+                $result_RoomList = $dbh->query($room_sql);
+                $RoomList = $result_RoomList ? $result_RoomList->fetch() : array();
             }
             $rack_sql = "SELECT 
                 (SELECT SUM(IFNULL(d.height, 0)) FROM device d WHERE d.rack_id=r.id AND d.is_deleted='N') as total_used_space,
@@ -183,7 +185,8 @@ class Simulation {
             $RackList = array();
             if($incr3 != "")
             {
-                $RackList = $dbh->query($rack_sql)->fetch();
+                $result_RackList = $dbh->query($rack_sql);
+                $RackList = $result_RackList ? $result_RackList->fetch() : array();
             }
             
             $capacity_arr['site'] = $SiteList['total_space'] - $SiteList['total_used_space'];
@@ -221,7 +224,8 @@ class Simulation {
                 FROM device WHERE is_simulation='Y'";
             
             $ConsoleConnList = array();
-            $ConsoleConnList = $dbh->query($sql)->fetch();
+            $result_ConsoleConnList = $dbh->query($sql);
+            $ConsoleConnList = $result_ConsoleConnList ? $result_ConsoleConnList->fetch() : array();
             
             return $ConsoleConnList;
 	}
@@ -232,7 +236,8 @@ class Simulation {
             $sql="SELECT * FROM rack WHERE id={$rack_id}";
             
             $GenrList = array();
-            $GenrList = $dbh->query($sql)->fetch();
+            $result_GenrList = $dbh->query($sql);
+            $GenrList = $result_GenrList ? $result_GenrList->fetch() : array();
             
             return $GenrList; 
         }
@@ -242,7 +247,8 @@ class Simulation {
             $sql="SELECT * FROM device WHERE name='{$device_name}'";
             
             $GenrList = array();
-            $GenrList = $dbh->query($sql)->fetch();
+            $result_GenrList = $dbh->query($sql);
+            $GenrList = $result_GenrList ? $result_GenrList->fetch() : array();
             
             return $GenrList; 
         }
