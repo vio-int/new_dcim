@@ -604,8 +604,11 @@ class Rack {
                 FROM rack r 
                 LEFT JOIN room l ON(l.id=r.room_id) WHERE r.is_deleted='N' AND r.is_simulation='N'";
             
-            $RackList = array();
-            $RackList = $dbh->query($sql)->fetch();
+            $RackList = array('total_rack' => 0);
+            $result = $dbh->query($sql);
+            if($result){
+                $RackList = $result->fetch();
+            }
             
             return $RackList;
 	}
