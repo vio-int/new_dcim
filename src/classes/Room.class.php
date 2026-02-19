@@ -319,8 +319,11 @@ class Room {
             $sql="SELECT count(*) as total_room FROM room r 
                 LEFT JOIN location l ON(r.location_id=l.id) WHERE r.is_deleted='N'";
             
-            $RoomList= array();
-            $RoomList = $dbh->query($sql)->fetch();
+            $RoomList = array('total_room' => 0);
+            $result = $dbh->query($sql);
+            if($result){
+                $RoomList = $result->fetch();
+            }
             
             return $RoomList;
 	}
