@@ -950,7 +950,7 @@ CREATE TABLE fac_DeviceTemplateCustomValue (
   TemplateID int(11) NOT NULL,
   AttributeID int(11) NOT NULL,
   Required tinyint(1) NOT NULL DEFAULT 0,
-  Value varchar(65000),
+  Value TEXT,
   PRIMARY KEY (TemplateID, AttributeID)
 ) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -961,7 +961,7 @@ DROP TABLE IF EXISTS fac_DeviceCustomValue;
 CREATE TABLE fac_DeviceCustomValue (
   DeviceID int(11) NOT NULL,
   AttributeID int(11) NOT NULL,
-  Value varchar(65000),
+  Value TEXT,
   PRIMARY KEY (DeviceID, AttributeID)
 ) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
