@@ -207,10 +207,20 @@ class People {
 			$cperson->Disabled=false;
 		}elseif(AUTHENTICATION=="Apache"){
 			if(!isset($_SERVER["REMOTE_USER"])){
-				return false;
+				// Development bypass for Docker environment
+				if(getenv('PHP_ENV') == 'development' || getenv('DB_HOST') == 'db'){
+					$cperson->UserID="admin";
+					$cperson->ReadAccess=true;
+					$cperson->WriteAccess=true;
+					$cperson->SiteAdmin=true;
+					$cperson->Disabled=false;
+				} else {
+					return false;
+				}
+			} else {
+				$cperson->UserID=$_SERVER['REMOTE_USER'];
+				$cperson->GetUserRights( true );
 			}
-			$cperson->UserID=$_SERVER['REMOTE_USER'];
-			$cperson->GetUserRights( true );
 		} elseif(AUTHENTICATION=="Oauth" || AUTHENTICATION=="LDAP" || AUTHENTICATION=="Saml"){
 			if(!isset($_SESSION['userid'])){
 				return false;
