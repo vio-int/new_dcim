@@ -164,7 +164,8 @@ class Location {
 
             $sql="SELECT * FROM location WHERE is_deleted='N' AND id=$this->PortID;";
 
-            if($row=$this->query($sql)->fetch()){
+            $result = $this->query($sql);
+            if($result && $row=$result->fetch()){
                     foreach(Location::RowToObject($row) as $prop => $value){
                             $this->$prop=$value;
                     }
