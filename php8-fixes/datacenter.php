@@ -1,0 +1,445 @@
+<?php
+	require_once('db.inc.php');
+	require_once('facilities.inc.php');
+
+	$subheader=__("Data Center Detail");
+
+	if(!$person->SiteAdmin){
+		// No soup for you.
+		header('Location: '.redirect());
+		exit;
+	}
+	
+	$status="";
+
+	$dc=new DataCenter();
+	
+	// AJAX Action
+	if(isset($_POST['confirmdelete']) && isset($_POST['datacenterid'])){
+		// About the nuke this place from orbit
+		$junkremoval=($_POST['junkremoval']=='delete')?true:false;
+		$dc->DataCenterID=$_POST['datacenterid'];
+		if($dc->DeleteDataCenter($junkremoval)){
+			echo 'ok';
+		}else{
+			echo 'no';
+		}
+		exit;
+	}
+	
+	if(isset($_POST['action'])&&(($_POST['action']=='Create')||($_POST['action']=='Update'))){
+		$dc->DataCenterID=$_POST['datacenterid'];
+		$dc->Name=trim($_POST['name']);
+		$dc->SquareFootage=$_POST['squarefootage'];
+		$dc->DeliveryAddress=$_POST['deliveryaddress'];
+		$dc->Administrator=$_POST['administrator'];
+		$dc->DrawingFileName=$_POST['drawingfilename'];
+		$dc->MaxkW=$_POST['maxkw'];
+		$dc->ContainerID=$_POST['container'];
+		$dc->MapX=$_POST['x'];
+		$dc->MapY=$_POST['y'];
+		
+		if($dc->Name!=""){
+			if($_POST['action']=='Create'){
+				$dc->CreateDataCenter();
+			}else{
+				$status=__("Updated");
+				$dc->UpdateDataCenter();
+			}
+		}
+	}
+
+	if(isset($_POST['cambio_cont'])&& $_POST['cambio_cont']=='SI'){
+		$dc->DataCenterID=$_POST['datacenterid'];
+		$dc->Name=trim($_POST['name']);
+		$dc->SquareFootage=$_POST['squarefootage'];
+		$dc->DeliveryAddress=$_POST['deliveryaddress'];
+		$dc->Administrator=$_POST['administrator'];
+		$dc->DrawingFileName=$_POST['drawingfilename'];
+		$dc->MaxkW=$_POST['maxkw'];
+		$dc->ContainerID=$_POST['container'];
+		if ($dc->ContainerID==0){
+			$dc->MapX=0;
+			$dc->MapY=0;
+		}else{
+			$dc->MapX=$_POST['x'];
+			$dc->MapY=$_POST['y'];
+		}
+	}
+	elseif(isset($_REQUEST['datacenterid'])&&$_REQUEST['datacenterid'] >0){
+		$dc->DataCenterID=(isset($_POST['datacenterid']) ? $_POST['datacenterid'] : $_GET['datacenterid']);
+		$dc->GetDataCenter();
+	}
+	$dcList=$dc->GetDCList();
+
+	if ( $config->ParameterArray["mUnits"] == "english" )
+		$vol = __("Square Feet");
+	else
+		$vol = __("Square Meters");
+
+	$imageselect='<div id="preview"></div><div id="filelist">';
+
+	$path='./drawings';
+	$dir=scandir($path);
+	foreach($dir as $i => $f){
+		if(is_file($path.DIRECTORY_SEPARATOR.$f)){
+			$mimeType=mime_content_type($path.DIRECTORY_SEPARATOR.$f);
+			if(preg_match('/^image/i', $mimeType)){
+				$imageselect.="<span>$f</span>\n";
+			}
+		}
+	}
+	$imageselect.="</div>";
+
+?>
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>VIO DCIM Data Center Inventory</title>
+  <!-- Favicon -->
+  <link type="image/x-icon" href="images/favicon.ico" rel="shortcut icon" />  
+  
+  <link rel="stylesheet" href="css/inventory.php" type="text/css">
+  <link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
+  <link rel="stylesheet" href="css/validationEngine.jquery.css" type="text/css">
+  <!--[if lt IE 9]>
+  <link rel="stylesheet"  href="css/ie.css" type="text/css">
+  <![endif]-->
+  <script type="text/javascript" src="scripts/jquery.min.js"></script>
+  <script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="scripts/jquery.validationEngine-en.js"></script>
+  <script type="text/javascript" src="scripts/jquery.validationEngine.js"></script>
+  <script type="text/javascript" src="scripts/common.js?v<?php echo filemtime('scripts/common.js');?>"></script>
+
+  <script type="text/javascript">
+	$(document).ready(function() {
+		$('#datacenterform').validationEngine({});
+		$('#drawingfilename').click(function(){
+			$("#imageselection").dialog({
+				resizable: false,
+				height:500,
+				width: 600,
+				modal: true,
+				buttons: {
+<?php echo '					',__("Select"),': function() {'; ?>
+						if($('#imageselection #preview').attr('image')!=""){
+							$('#drawingfilename').val($('#imageselection #preview').attr('image'));
+						}
+						$(this).dialog("close");
+					}
+				}
+			});
+			$("#imageselection span").each(function(){
+				var preview=$('#imageselection #preview');
+				$(this).click(function(){
+					preview.css({'border-width': '5px', 'width': '380px', 'height': '380px'});
+					preview.html('<img src="drawings/'+$(this).text()+'" alt="preview">').attr('image',$(this).text());
+					preview.children('img').load(function(){
+						var topmargin=0;
+						var leftmargin=0;
+						if($(this).height()<$(this).width()){
+							$(this).width(preview.innerHeight());
+							$(this).css({'max-width': preview.innerWidth()+'px'});
+							topmargin=Math.floor((preview.innerHeight()-$(this).height())/2);
+						}else{
+							$(this).height(preview.innerHeight());
+							$(this).css({'max-height': preview.innerWidth()+'px'});
+							leftmargin=Math.floor((preview.innerWidth()-$(this).width())/2);
+						}
+						$(this).css({'margin-top': topmargin+'px', 'margin-left': leftmargin+'px'});
+					});
+					$("#imageselection span").each(function(){
+						$(this).removeAttr('style');
+					});
+					$(this).css('border','1px dotted black')
+				});
+				if($('#drawingfilename').val()==$(this).text()){
+					$(this).click();
+				}
+			});
+		});
+		$('#delete-btn').click(function(){
+				var defaultbutton={
+				"<?php echo __("Yes"); ?>": function(){
+					$.post('', {datacenterid: $('#datacenterid').val(),confirmdelete: '',junkremoval: $('#deletemodal select').val()}, function(data){
+						if(data.trim()=='ok'){
+							self.location="datacenter.php";
+							console.log(self.location);
+							$(this).dialog("destroy");
+						}else{
+							alert("Danger, Will Robinson! DANGER!  Something didn't go as planned.");
+						}
+					});
+				}
+			}
+			var cancelbutton={
+				"<?php echo __("No"); ?>": function(){
+					$(this).dialog("destroy");
+				}
+			}
+			var modal=$('#deletemodal').dialog({
+				dialogClass: 'no-close',
+				modal: true,
+				width: 'auto',
+				buttons: $.extend({}, defaultbutton, cancelbutton)
+			});
+		});
+	});
+	function coords(evento){
+		mievento = evento || window.event;
+
+		yo=document.getElementById("yo");
+		x=mievento.layerX;
+		y=mievento.layerY;
+		yo.style.left=(x-12)+"px";
+		yo.style.top=(y-12)+"px";
+		yo.hidden=false;
+		CoorX=document.getElementById("x");
+		CoorX.value=x*2;
+		CoorY=document.getElementById("y");
+		CoorY.value=y*2;
+	}
+	function mueve(){
+		tam=50;
+		red=.5;
+		tam=tam*red;
+		yo=document.getElementById("yo");
+		cont=document.getElementById("containerimg");
+		CoorX=document.getElementById("x");
+		CoorY=document.getElementById("y");
+		if (CoorX.value<0) CoorX.value=0;
+		if (CoorX.value*red>cont.offsetWidth) CoorX.value=cont.offsetWidth/red;
+		if (CoorY.value<0) CoorY.value=0;
+		if (CoorY.value*red>cont.offsetHeight) CoorY.value=cont.offsetHeight/red;
+		yo.style.left=(CoorX.value*red-tam/2)+"px";
+		yo.style.top=(CoorY.value*red-tam/2)+"px";
+		if (CoorX.value<0 || CoorX.value*red>cont.offsetWidth
+			|| CoorY.value<0 || CoorY.value*red>cont.offsetHeight)
+			yo.hidden=true;
+		else
+			yo.hidden=false;
+	}
+
+	function cambio_container(){
+		document.getElementById("cambio_cont").value="SI";
+		document.getElementById("datacenterform").submit();
+	}
+  </script>
+
+  <style type="text/css">
+   .container2{height:300px}
+    #status{position:fixed;left:0px;top:0px;width:100%;height:140px;overflow:hidden}
+    #status div{background-color:rgba(13, 13, 13, 0.5);width:100%;height:100%;padding:10px 10px 10px 10px;font:13px bold sans-serif;color:#fff}
+  </style>
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maptalks@0.40.3/dist/maptalks.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/maptalks@0.40.3/dist/maptalks.min.js"></script>
+</head>
+<body>
+<?php include( 'header.inc.php' ); ?>
+<div class="container">
+<div class="page1">
+<div class="col-sm-12">
+<?php
+	// include( 'sidebar.inc.php' );
+
+echo '
+    <div class="form_container">
+<h3>',$status,'</h3>
+<div class="center"><div>
+<form id="datacenterform" method="POST">
+<div class="table">
+<div class="form-group">
+   <label for="datacenterid">',__("Data Center ID"),'</label>
+   <select name="datacenterid" id="datacenterid" onChange="form.submit()" class="form-control">
+      <option value="0">',__("New Data Center"),'</option>';
+
+	foreach($dcList as $dcRow){
+		if($dcRow->DataCenterID == $dc->DataCenterID){$selected=" selected";}else{$selected="";}
+		print "<option value=\"$dcRow->DataCenterID\"$selected>$dcRow->Name</option>\n";
+	}
+
+echo '	</select>
+</div>
+<div class="form-group">
+   <label for="dcname">',__("Name"),'</label>
+   <input class="form-control validate[required,minSize[3],maxSize[80]]" type="text" name="name" id="dcname" size="50" maxlength="80" value="',$dc->Name,'">
+</div>
+<div class="form-group">
+   <label for="sqfootage">',$vol,'</label>
+   <input class="form-control validate[optional,custom[onlyNumberSp]]" type="text" name="squarefootage" id="sqfootage" size="10" maxlength="11" value="',$dc->SquareFootage,'">
+</div>
+<div class="form-group">
+   <label for="deliveryaddress">',__("Delivery Address"),'</label>
+   <input class="form-control validate[optional,minSize[1],maxSize[200]]" type="text" name="deliveryaddress" id="deliveryaddress" size="60" maxlength="200" value="',$dc->DeliveryAddress,'">
+</div>
+<div class="form-group">
+   <label for="administrator">',__("Administrator"),'</label>
+   <input class="form-control validate[optional,minSize[1],maxSize[80]]" type="text" type="text" name="administrator" id="administrator" size=60 maxlength="80" value="',$dc->Administrator,'">
+</div>
+<div class="form-group">
+   <label for="drawingfilename">',__("Drawing URL"),'</label>
+   <input type="text" class="form-control" name="drawingfilename" id="drawingfilename" size=60 value="',$dc->DrawingFileName,'">
+</div>
+<div class="form-group">
+	<label for="maxkw">',__("Design Maximum (kW)"),'</label>
+	<input class="form-control validate[optional,custom[onlyNumberSp]]" type="text" name="maxkw" id="maxkw" size="8" maxlength="8" value="',$dc->MaxkW,'">
+</div>
+<div><input type="hidden" name="cambio_cont" id="cambio_cont" value=""></div>
+<div class="form-group">
+	<label for="container">',__("Container"),'</label>
+  	<select name="container" class="form-control" id="container" onChange="cambio_container()">
+      <option value="0">',__("None"),'</option>';
+
+	$container=new Container();
+	$cList=$container->GetContainerList();
+	foreach($cList as $cRow){
+		if($cRow->ContainerID == $dc->ContainerID){$selected=" selected";}else{$selected="";}
+		print "<option value=\"$cRow->ContainerID\"$selected>$cRow->Name</option>\n";
+	}
+
+echo '	</select>
+</div>
+<div class="form-group"> 
+	<b>Longitude</b>
+ 	<input type="number" class="form-control" name="x" id="x" step="any" value="',$dc->MapX,'"></div> 
+</div> 
+<div class="form-group">
+    <b>Latitude</b>
+    <input type="number" class="form-control" name="y" id="y" step="any" value="',$dc->MapY,'">
+</div>'; 
+
+if ($dc->ContainerID>0){
+	print "<div id=map class=container2>\n"; 
+	print "</div>"; 
+	// $container->ContainerID=$dc->ContainerID;
+	// $container->GetContainer();
+
+	// print $container->MakeContainerMiniImage("dc",$dc->DataCenterID);
+
+	if($_SERVER['HTTP_HOST'] == "localhost")
+        {
+           $db = new mysqli('localhost', 'root', '', 'yanto_dcim'); 
+        } else {
+           $db = new mysqli('localhost', 'root', 'Admin1@#4', 'yanto_dcim');
+        }
+
+         $sql    =   "SELECT MapX as 'lat', MapY as 'lng' FROM `fac_DataCenter` WHERE DataCenterID='$dc->DataCenterID'";
+
+        $res    =   $db->query( $sql );
+        $places=array();
+        // if( $res ) while( $rs=$res->fetch_object() ) $tempat=array_push($places,'name'=>$rs->name, 'latitude'=>$rs->lat, 'longitude'=>$rs->lng);
+         
+         while($row = $res->fetch_assoc()) {
+          $places[] = $row;
+         
+         }
+
+        
+        $mapping="[";
+
+        foreach ($places as $key) {
+          $mapping.=$key['lat'].",";
+          $mapping.=$key['lng']."]".",";
+          // echo "["."'".$key['name']."'".",";
+          // echo $key['lat'].",";
+          // echo $key['lng']."]".",";
+          // echo "<br>";
+         }
+
+  
+         $mapping= substr_replace($mapping ,"",-1);
+	
+}
+
+echo '<div class="caption">';
+
+	if($dc->DataCenterID >0){
+		echo '<button type="submit" name="action" class="btn btn-primary" value="Update">',__("Update"),'</button>';
+	}else{
+		echo '<button type="submit" name="action" class="btn btn-primary" value="Create">',__("Create"),'</button>';
+	}
+	
+	if ( $person->SiteAdmin && $dc->DataCenterID > 0 ) {
+		echo '<button type="button" id="delete-btn" class="btn btn-primary" name="action" value="Delete">',__("Delete"),'</button>';
+	}
+?>
+</div>
+</div> <!-- END div.table -->
+</form>
+<?php echo '
+			<div id="imageselection" title="Image file selector">
+				',$imageselect,'
+			</div>
+</div></div>
+<!-- hiding modal dialogs here so they can be translated easily -->
+<div class="hide">
+	<div title="',__("Data Center Deletion Confirmation"),'" id="deletemodal">
+		<div id="modaltext"><img src="images/mushroom_cloud.jpg" class="floatleft">',__("Are you sure that you want to delete this data center and all contents within it?"),'
+			&nbsp;&nbsp;<select><option value="delete">',__("Delete"),'</option></select></p>
+		</div>
+	</div>
+</div>
+
+'; ?>
+</div><!-- END div.main -->
+</div><!-- END div.page -->
+</div>
+</div>
+
+<script>
+	  var mapping = <?php echo json_encode($mapping) ?>;
+      var mapping= JSON.parse(mapping);
+
+      var map = new maptalks.Map('map', {
+        center: mapping,
+        zoom: 17,
+        centerCross: true,
+        zoomControl : true,
+        baseLayer: new maptalks.TileLayer('base', {
+          urlTemplate: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+          subdomains: ['a','b','c','d'],
+          attribution: '&copy; <a href="http://vioint.co.id">VIO DCIM</a> '
+        }),
+        layers: [
+          new maptalks.VectorLayer('v')
+        ]
+      });
+
+      map.on('zoomend moving moveend', getStatus);
+
+      getStatus();
+
+      function getStatus() {
+        var extent = map.getExtent(),
+          ex = [
+            '{',
+            'xmin:' + extent.xmin.toFixed(5),
+            ', ymin:' + extent.ymin.toFixed(5),
+            ', xmax:' + extent.xmax.toFixed(5),
+            ', ymax:' + extent.xmax.toFixed(5),
+            '}'
+          ].join('');
+        var center = map.getCenter();
+        var mapStatus = [
+          'Center : [' + [center.x.toFixed(5), center.y.toFixed(5)].join() + ']',
+        ];
+
+        CoorX=document.getElementById("x");
+		CoorX.value=center.x.toFixed(5);
+		CoorY=document.getElementById("y");
+		CoorY.value=center.y.toFixed(5);
+
+        // document.getElementById('status').innerHTML = '<div>' + mapStatus.join('<br>') + '</div>';
+      }
+
+
+    </script>
+
+</body>
+</html>

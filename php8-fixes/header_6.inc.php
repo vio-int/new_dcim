@@ -1,0 +1,463 @@
+<?php
+$header = (!isset($header)) ? $config->ParameterArray["OrgName"] : $header;
+$subheader = (!isset($subheader)) ? "" : $subheader;
+$version = $config->ParameterArray["Version"];
+?>
+
+<!-- Ganti Header dan menambahkan condition-condition untuk rights -->
+<!-- Diubah Oleh Firdauz Fanani 23 April 2018 -->
+
+<style>
+    .navbar-template {
+        padding: 40px 15px;
+    }
+
+    @media (min-width: 767px) {
+        .navbar-nav .dropdown-menu .caret {
+            transform: rotate(-90deg);
+        }
+    }
+</style>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/navbar.css" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+<link href="css/demo.css" rel="stylesheet" type="text/css" />
+<link href="css/search.css" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow" rel="stylesheet"> 
+
+<style type="text/css">
+    #topNav ul { max-height:600px; overflow-y:auto; }
+</style>
+
+<!-- HEADER CODE START -->
+<header class="navbar" id="header-navbar">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="images/dcim_logo.png" class="image-responsive" style="margin:-13px 0px 0px 8px;width: 170px;height: 47px;">
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav">
+                    <li class=""><a href="index_3.php"><i class="fas fa-home"></i> Home </b></a></li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DCIM <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class=""><a href="zone.php"> Location </b></a></li>
+                            <li class=""><a href="cabrow.php"> Room </b></a></li>
+                            <li class=""><a href="cabinets.php"> Rack </b></a></li>
+                            <li class=""><a href="device_templates.php"> Devices </b></a></li>
+                            <li class=""><a href="javascript:void(0);"> Capacity </b></a></li>
+                            <li class=""><a href="javascript:void(0);"> Asset Management </b></a></li>
+                            <li class=""><a href="javascript:void(0);"> Monitor and Alarm </b></a></li>
+                            <li class=""><a href="javascript:void(0);"> Connector Management </b></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DCFM <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class=""><a href="facpowatt.php"> Power (Single Line Diagram) </b></a></li>
+                            <li class=""><a href="javascript:void(0);"> Cooling System </b></a></li>
+                            <li class=""><a href="javascript:void(0);"> Security </b></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">IT Hardware Management <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class=""><a href="ipam_ipaddress.php"> IPAM </b></a></li>
+                            <li class=""><a href="configuration.php"> Configuration Management </b></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<script src="scripts/navbar.js"></script>
+<style type="text/css">
+    .container {
+        width: 1325px !important;
+    }
+    .navbar {
+        color: #f3f0f0bf;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+        font-size: 14px !important;
+        position: relative;
+        margin-top: -1px !important;
+        margin-bottom: -3px !important;
+        border: 1px solid transparent !important;
+        border-bottom-color: #dcdcdc !important;
+    }
+    .navbar-nav {
+        margin: 0px 0px 0px -9px !important;
+    }
+    .navbar-inverse .navbar-nav>li>a {
+        color: #9d9d9d;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+    .dropdown-menu{
+        color: #fff !important;
+        background-color: #fff !important;
+        padding: 0px 0px 0px 0px !important;
+    }
+    .dropdown-menu>li>a {
+        color: #868686 !important;
+        padding: 3px 5px 3px 5px !important;
+    }
+    ul.nav li {
+        padding: .25em !important;
+    }
+    .navbar-inverse .navbar-brand {
+        color: #868686 !important;
+    }
+    .navbar-inverse .navbar-nav>li>a {
+        color: #868686 !important;
+    }
+    .nav a:visited {
+        color: #868686 !important;
+    }
+    .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+        color: #fff;
+        background-color: #f4f1f1 !important;
+    }
+    .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+        background-color: #e7e7e7 !important;
+        outline:none;
+    }
+    .nav>li>a {
+        padding: 10px 10px !important;
+    }
+    .navbar-brand {
+        font-size: 14px !important;
+        /* color: #0080ff !important; */
+    }
+    .installer ul li, ul.nav li {
+        /* display: block; */
+        background-color: #f8f8f8 !important;
+        /* border: 0px solid #212F39; */
+    }
+    div.main { 
+        background-color: #ffffff !important;
+        border: none !important;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+        min-width: 85% !important;
+        padding: 25px !important;
+    }
+    h1, h2, h3 {
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+        font-size: 25px !important;
+        color: black !important;
+    }
+    .backgroundpage {
+        background-image: none !important;
+        background-size: cover;
+    }
+    .page1 {
+        background-color: white !important;
+    }
+    .makecenter {
+        margin-top: 2% !important;
+    }
+    .table {
+        border-collapse: collapse !important;
+        border-spacing: 0 !important;
+    }
+    div.center div table, div.center div tr, div.center div td{
+        border: none !important;
+    }
+    .table-headings th{
+        
+        font-size: 14px !important;
+        background-color: #f5f5f5 !important;
+        line-height: 1.42857143 !important;
+        vertical-align: top !important;
+        border-top: 1px solid #ddd !important;
+        color: #337ab7 !important;
+        font-weight: bold !important;
+    }
+</style>
+<!-- HEADER CODE END -->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!--         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+
+<!-- Latest compiled and minified CSS -->
+<!--         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"></link> -->
+
+<!-- Optional theme -->
+
+<!-- Latest compiled and minified JavaScript -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
+
+<script type="text/javascript">
+    function addlookup(inputobj, lookuptype) {
+// clear any existing autocompletes
+        if (inputobj.hasClass('ui-autocomplete-input')) {
+            inputobj.autocomplete('destroy');
+        }
+// clear out previous search arrows
+        inputobj.next('.text-arrow').remove();
+// Position the arrow
+        var inputpos = inputobj.position();
+        var arrow = $('<div />').addClass('text-arrow');
+        arrow.click(function () {
+            inputobj.autocomplete("search", "");
+        });
+// add the autocomplete
+        inputobj.autocomplete({
+            minLength: 0,
+            delay: 600,
+            autoFocus: true,
+            source: function (req, add) {
+                $.getJSON('scripts/ajax_search.php?' + lookuptype, {q: req.term}, function (data) {
+                    var suggestions = [];
+                    $.each(data, function (i, val) {
+                        suggestions.push(val);
+                    });
+                    ey
+                    add(suggestions);
+                });
+            },
+            open: function () {
+                $(this).autocomplete("widget").css({'width': inputobj.width() + 6 + 'px'});
+            }
+        }).next().after(arrow);
+        arrow.css({'top': inputpos.top + 'px', 'left': inputpos.left + inputobj.width() - (arrow.width() / 2)});
+    }
+    $('#advsrch, #searchadv ~ .ui-icon.ui-icon-close').click(function () {
+        var here = $(this).position();
+        $('#searchadv, #searchname').val('');
+        $('#searchadv').parents('form').height(here.top).toggle('slide', 200).removeClass('hide');
+        if ($('#searchadv').hasClass('ui-autocomplete-input')) {
+            $('#searchadv').autocomplete('destroy');
+        }
+        if ($(this).text() == '<?php echo __("Advanced"); ?>') {
+            $(this).text('<?php echo __("Basic"); ?>');
+            $('#searchadv ~ select[name="key"]').trigger('change');
+        } else {
+            $(this).text('<?php echo __("Advanced"); ?>');
+        }
+    });
+</script>
+<script type="text/javascript" src="scripts/mktree.js"></script> 
+<script type="text/javascript" src="scripts/konami.js"></script> 
+
+<?php
+/*
+  function buildmenu($menu) {
+  $level = '';
+  foreach ($menu as $key => $item) {
+  $level .= "<li>";
+  if (!is_array($item)) {
+  $level .= "$item";
+  } else {
+  $level .= "<a>$key</a><ul>";
+  $level .= buildmenu($item);
+  $level .= "</ul>";
+  }
+  $level .= "</li>";
+  }
+  return $level;
+  }
+
+  $menu = buildmenu(array_merge_recursive($rmenu, $rrmenu, $camenu, $wamenu, $samenu, $lmenu));
+
+  print "
+  <div style='margin-left:10px;'>
+  <a href=\"index.php\">" . __("Home") . "</a>\n";
+
+  $lang = GetValidTranslations();
+  //strip any encoding info and keep just the country lang pair
+  $locale = explode(".", $locale);
+  $locale = $locale[0];
+  echo '  <div class="langselect hide">
+  <label for="language">Language</label>
+  <select name="language" id="language" current="' . $locale . '">';
+  foreach ($lang as $cc => $translatedname) {
+  // This is for later. For now just display list
+  //$selected=""; //
+  if ($locale == $cc) {
+  $selected = " selected";
+  } else {
+  $selected = "";
+  }
+  print "\t\t\t<option value=\"$cc\"$selected>$translatedname</option>";
+  }
+  echo '      </select>
+  </div>
+
+  <div id="nav_placeholder"></div>'; */
+// Moved the navigation menu to an ajax load item   
+?>
+</div>
+<script type="text/javascript">
+
+    $("#sidebar .nav a").each(function () {
+        var loc = window.location;
+        if ($(this).attr("href") == "<?php echo basename($_SERVER['SCRIPT_NAME']); ?>" || $(this).attr("href") == loc.href.substr(loc.href.indexOf(loc.host) + loc.host.length + 1)) {
+            $(this).addClass("active");
+            $(this).parentsUntil("#ui-id-1", "li").children('a:first-child').addClass("active");
+        }
+    });
+    $("#sidebar .nav").menu();
+
+    $('#searchname').width($('#sidebar').innerWidth() - $('#searchname ~ button').outerWidth());
+    addlookup($('#searchname'), 'name');
+    $('#searchadv ~ select[name="key"]').change(function () {
+        addlookup($('#searchadv'), $(this).val())
+    }).outerHeight($('#searchadv').outerHeight()).outerWidth(157);
+
+// Really long cabinet / zone / dc combinations are making the screen jump around.
+// If they make this thing so big it's unusable, fuck em.
+    $('#sidebar > hr ~ div').css({'width': $('#sidebar > hr ~ ul').width() + 'px', 'overflow': 'hidden'});
+
+    function resize() {
+        // Reset widths to make shrinking screens work better
+        $('#header,div.main,div.page').css('width', 'auto');
+        // This function will run each 500ms for 2.5s to account for slow loading content
+        var count = 0;
+        subresize();
+        var longload = setInterval(function () {
+            subresize();
+            if (count > 4) {
+                clearInterval(longload);
+                window.resized = true;
+            }
+            ++count;
+        }, 500);
+
+        function subresize() {
+            // page width is calcuated different between ie, chrome, and ff
+            $('#header').width(Math.floor($(window).outerWidth() - (16 * 3))); //16px = 1em per side padding
+            var widesttab = 0;
+            // make all the tabs on the config page the same width
+            $('#configtabs > ul ~ div').each(function () {
+                widesttab = ($(this).width() > widesttab) ? $(this).width() : widesttab;
+            });
+            $('#configtabs > ul ~ div').each(function () {
+                $(this).width(widesttab);
+            });
+
+            if (typeof getCookie == 'function' && getCookie("layout") == "Landscape") {
+                // edge case where a ridiculously long device type can expand the field selector out too far
+                var rdivwidth = $('div.right').outerWidth();
+                $('div.right fieldset').each(function () {
+                    rdivwidth = ($(this).outerWidth() > rdivwidth) ? $(this).outerWidth() : rdivwidth;
+                });
+                // offset for being centered
+                rdivwidth = (rdivwidth > 495) ? (rdivwidth - 495) + rdivwidth : rdivwidth;
+            } else {
+                rdivwidth = 0;
+            }
+
+            var pnw = $('#pandn').outerWidth(), hw = $('#header').outerWidth(), maindiv = $('div.main').outerWidth(),
+                    sbw = $('#sidebar').outerWidth(), width, mw = $('div.left').outerWidth() + rdivwidth + 20,
+                    main, cw = $('.main > .center').outerWidth();
+            widesttab += 58;
+
+            // find widths
+            width = (cw > mw) ? cw : mw;
+            main = (pnw > width) ? pnw : width; // Find the largest width of possible content in maindiv
+            main += 12; // add in padding and borders
+            width = ((main + sbw) > hw) ? main + sbw : hw; // find the widest point of the page
+
+            // The math just isn't adding up across browsers and FUCK IE
+            if ((main + sbw) < width) { // page is larger than content expand main to fit
+                $('#header').outerWidth(width);
+                $('div.main').outerWidth(width - sbw - 4);
+                $('div.page').outerWidth(width);
+            } else { // page is smaller than content expand the page to fit
+                $('div.main').width(width - sbw - 12);
+                $('#header').width(width + 4);
+                $('div.page').width(width + 6);
+            }
+
+            // If the function MoveButtons is defined run it
+            if (typeof movebuttons == 'function') {
+                movebuttons();
+            }
+        }
+    }
+    $(document).ready(function () {
+        resize();
+        // redraw the screen if the window size changes for some reason
+        $(window).resize(function () {
+            if (this.resizeTO) {
+                clearTimeout(this.resizeTO);
+            }
+            this.resizeTO = setTimeout(function () {
+                resize();
+            }, 500);
+        });
+        $('#header').append($('.langselect'));
+        $(".langselect").css({"right": "3px", "z-index": "99", "position": "absolute"}).removeClass('hide').appendTo("#header");
+        $(".langselect").css({"bottom": $(".langselect").height() + "px"});
+        $("#language").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: 'scripts/ajax_language.php',
+                data: 'sl=' + $("#language").val(),
+                success: function () {
+                    // new cookie was set. reload the page for the translation.
+                    location.reload();
+                }
+            });
+        });
+<?php
+// No navigation menu if you're not logged in, yet
+if (!strpos($_SERVER['SCRIPT_NAME'], "login")) {
+    ?>
+            $.get('scripts/ajax_navmenu.php').done(function (data) {
+                $('#nav_placeholder').replaceWith(data);
+                if (("#").readyState === "complete" && $('#datacenters .bullet').length == 0) {
+                    window.convertTrees();
+                }
+            });
+    <?php
+}
+?>
+    });
+
+</script>
+
+<script type="text/javascript">
+    var s = $('.searchname'),
+            f = $('#formsearch'),
+            a = $('.after'),
+            m = $('h4');
+
+    s.focus(function () {
+        if (f.hasClass('open'))
+            return;
+        f.addClass('in');
+        setTimeout(function () {
+            f.addClass('open');
+            f.removeClass('in');
+        }, 1300);
+    });
+
+    a.on('click', function (e) {
+        e.preventDefault();
+        if (!f.hasClass('open'))
+            return;
+        s.val('');
+        f.addClass('close');
+        f.removeClass('open');
+        setTimeout(function () {
+            f.removeClass('close');
+        }, 1300);
+    })
+
+</script>

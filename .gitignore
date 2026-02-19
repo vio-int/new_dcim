@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+*/node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+*.zip
+*.tar.gz
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Database
+*.sql.gz
+*.dump
+
+# Docker volumes
+docker/mysql/data/
+docker/redis/data/
