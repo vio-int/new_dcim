@@ -254,11 +254,14 @@ class DataCenter {
 		$sql="SELECT * FROM fac_datacenter ORDER BY Name ASC;";
 
 		$datacenterList=array();
-		foreach($dbh->query($sql) as $row){
-			if($indexedbyid){
-				$datacenterList[$row['DataCenterID']]=DataCenter::RowToObject($row);
-			}else{
-				$datacenterList[]=DataCenter::RowToObject($row);
+		$result = $dbh->query($sql);
+		if($result){
+			foreach($result as $row){
+				if($indexedbyid){
+					$datacenterList[$row['DataCenterID']]=DataCenter::RowToObject($row);
+				}else{
+					$datacenterList[]=DataCenter::RowToObject($row);
+				}
 			}
 		}
 
