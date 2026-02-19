@@ -437,8 +437,11 @@ class Device_new {
                 LEFT JOIN rack r ON(r.id=d.rack_id) 
                 LEFT JOIN manufacture m ON(m.id = d.manufacture_id) WHERE d.is_deleted='N' AND d.is_simulation='N'";
             
-            $Device_newList = array();
-            $Device_newList = $dbh->query($sql)->fetch();
+            $Device_newList = array('total_device' => 0);
+            $result = $dbh->query($sql);
+            if($result){
+                $Device_newList = $result->fetch();
+            }
             
             return $Device_newList;
 	}

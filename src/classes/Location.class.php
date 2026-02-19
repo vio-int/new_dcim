@@ -287,10 +287,12 @@ class Location {
             }
             
             $rack_sql="SELECT COUNT(*) as total_rack FROM rack WHERE is_deleted='N' AND is_simulation='N' ".$incr."";
-            $RowList['total_rack'] = $dbh->query($rack_sql)->fetch();
+            $rack_result = $dbh->query($rack_sql);
+            $RowList['total_rack'] = $rack_result ? $rack_result->fetch() : array('total_rack' => 0);
             
             $device_sql="SELECT COUNT(*) as total_device FROM device WHERE is_deleted='N' AND is_simulation='N' ".$incr."";
-            $RowList['total_device'] = $dbh->query($device_sql)->fetch();
+            $device_result = $dbh->query($device_sql);
+            $RowList['total_device'] = $device_result ? $device_result->fetch() : array('total_device' => 0);
             
             $prefix_sql="SELECT COUNT(*) as total_prefix FROM ipam_prefix WHERE is_deleted='N' ".$incr."";
             $RowList['total_prefix'] = $dbh->query($prefix_sql)->fetch();
