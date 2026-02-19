@@ -310,8 +310,11 @@ class Location {
             
             $sql="SELECT count(*) as total_location FROM location WHERE is_deleted='N'";
             
-            $LocationList = array();
-            $LocationList = $dbh->query($sql)->fetch();
+            $LocationList = array('total_location' => 0);
+            $result = $dbh->query($sql);
+            if($result){
+                $LocationList = $result->fetch();
+            }
             
             return $LocationList;
 	}
