@@ -21,7 +21,8 @@
 
 #Options -Indexes
 
-AuthName "Identify Yourself First."
-AuthType Basic
-AuthUserFile /var/www/html/.htpasswd
-require valid-user
+# Authentication disabled for Docker development
+#AuthName "Identify Yourself First."
+#AuthType Basic
+#AuthUserFile /var/www/html/.htpasswd
+#require valid-user
