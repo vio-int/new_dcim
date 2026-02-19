@@ -23,6 +23,5 @@
 
 AuthName "Identify Yourself First."
 AuthType Basic
-AuthUserFile c:\xampp\htdocs\yanto_dcim\.htpasswd
-#AuthUserFile /var/www/.htpasswd
+AuthUserFile /var/www/html/.htpasswd
 require valid-user
