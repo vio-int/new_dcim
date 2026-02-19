@@ -937,7 +937,7 @@ CREATE TABLE fac_DeviceCustomAttribute(
   AttributeType varchar(8) NOT NULL DEFAULT "string",
   Required tinyint(1) NOT NULL DEFAULT 0,
   AllDevices tinyint(1) NOT NULL DEFAULT 0,
-  DefaultValue varchar(65000),
+  DefaultValue TEXT,
   PRIMARY KEY (AttributeID),
   UNIQUE (Label)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
