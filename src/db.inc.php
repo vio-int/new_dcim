@@ -1,5 +1,5 @@
 <?php
-	error_reporting(E_ALL);
+	error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 	// Not everyone will have the ability to (or, let's face it, attention span) set the PHP directive session.auto_start = 1
 	// so we will simply start a session here (which will not cause any issues if auto_start is already set to 1) unless
 	// we are being invoked from the command line
