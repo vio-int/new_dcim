@@ -236,12 +236,15 @@ class Rack {
             $sql="SELECT * FROM rack WHERE is_deleted='N' AND is_simulation='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
-                    if($indexbyid){
-                            $ManufacturerList[$row['PortID']]=Rack::RowToObject($row);
-                    }else{
-                            $ManufacturerList[]=Rack::RowToObject($row);
-                    }
+            $result = $dbh->query($sql);
+            if ($result) {
+                foreach($result as $row){
+                        if($indexbyid){
+                                $ManufacturerList[$row['PortID']]=Rack::RowToObject($row);
+                        }else{
+                                $ManufacturerList[]=Rack::RowToObject($row);
+                        }
+                }
             }
             
             return $ManufacturerList;

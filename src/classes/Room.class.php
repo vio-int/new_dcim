@@ -197,12 +197,15 @@ class Room {
             $sql="SELECT * FROM room WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
-                    if($indexbyid){
-                            $ManufacturerList[$row['PortID']]=Room::RowToObject($row);
-                    }else{
-                            $ManufacturerList[]=Room::RowToObject($row);
-                    }
+            $result = $dbh->query($sql);
+            if ($result) {
+                foreach($result as $row){
+                        if($indexbyid){
+                                $ManufacturerList[$row['PortID']]=Room::RowToObject($row);
+                        }else{
+                                $ManufacturerList[]=Room::RowToObject($row);
+                        }
+                }
             }
             
             return $ManufacturerList;

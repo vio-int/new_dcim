@@ -97,12 +97,15 @@ class Manufacture {
             $sql="SELECT * FROM manufacture ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
-                    if($indexbyid){
-                            $ManufacturerList[$row['PortID']]=Manufacture::RowToObject($row);
-                    }else{
-                            $ManufacturerList[]=Manufacture::RowToObject($row);
-                    }
+            $result = $dbh->query($sql);
+            if ($result) {
+                foreach($result as $row){
+                        if($indexbyid){
+                                $ManufacturerList[$row['PortID']]=Manufacture::RowToObject($row);
+                        }else{
+                                $ManufacturerList[]=Manufacture::RowToObject($row);
+                        }
+                }
             }
             return $ManufacturerList;
 	}

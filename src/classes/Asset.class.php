@@ -409,12 +409,15 @@ class Asset {
             $sql="SELECT * FROM assets WHERE is_deleted='N' AND is_simulation='N' ORDER BY next_main_date ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
-                    if($indexbyid){
-                            $ManufacturerList[$row['PortID']]=Asset::RowToObject($row);
-                    }else{
-                            $ManufacturerList[]=Asset::RowToObject($row);
-                    }
+            $result = $dbh->query($sql);
+            if ($result) {
+                foreach($result as $row){
+                        if($indexbyid){
+                                $ManufacturerList[$row['PortID']]=Asset::RowToObject($row);
+                        }else{
+                                $ManufacturerList[]=Asset::RowToObject($row);
+                        }
+                }
             }
             
             return $ManufacturerList;
@@ -542,12 +545,15 @@ class Asset {
             $sql="SELECT *, status as status_name FROM asset_status WHERE is_deleted='N' ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
-                    if($indexbyid){
-                            $ManufacturerList[$row['PortID']]=Asset::RowToObject($row);
-                    }else{
-                            $ManufacturerList[]=Asset::RowToObject($row);
-                    }
+            $result = $dbh->query($sql);
+            if ($result) {
+                foreach($result as $row){
+                        if($indexbyid){
+                                $ManufacturerList[$row['PortID']]=Asset::RowToObject($row);
+                        }else{
+                                $ManufacturerList[]=Asset::RowToObject($row);
+                        }
+                }
             }
             
             return $ManufacturerList;
