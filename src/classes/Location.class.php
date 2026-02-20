@@ -39,6 +39,22 @@ class Location {
 	function MakeSafe(){
             $this->PortID=intval($this->PortID);
             $this->Name=sanitize($this->Name);
+            $this->Slug=sanitize($this->Slug);
+            $this->Status=sanitize($this->Status);
+            $this->Location=sanitize($this->Location);
+            $this->Facility=sanitize($this->Facility);
+            $this->ASN=sanitize($this->ASN);
+            $this->Time_zone=sanitize($this->Time_zone);
+            $this->Description=sanitize($this->Description);
+            $this->Physical_address=sanitize($this->Physical_address);
+            $this->Shipping_address=sanitize($this->Shipping_address);
+            $this->Latitude=sanitize($this->Latitude);
+            $this->Longitude=sanitize($this->Longitude);
+            $this->Contact_name=sanitize($this->Contact_name);
+            $this->Contact_email=sanitize($this->Contact_email);
+            $this->Contact_no=sanitize($this->Contact_no);
+            $this->Tag=sanitize($this->Tag);
+            $this->Comment=sanitize($this->Comment);
 	}
 
 	function MakeDisplay(){
@@ -333,13 +349,13 @@ class Location {
             $this->MakeSafe();
             
             if(!empty($params)){
-                $location_name = $params['location_name'];
+                $location_name = sanitize($params['location_name']);
             } else {
                 $location_name = $this->Name;
             }
             
             
-            $sql="INSERT INTO location SET name=\"$location_name\", slug=\"$this->Slug\", status=\"$this->Status\", location_id=\"$this->Location\", facility=\"$this->Facility\", asn=\"$this->ASN\", time_zone=\"$this->Time_zone\", description=\"$this->Description\", physical_address=\"$this->Physical_address\", shipping_address=\"$this->Shipping_address\", latitude=\"$this->Latitude\", longitude=\"$this->Longitude\", contact_name=\"$this->Contact_name\", contact_email=\"$this->Contact_email\", contact_no=\"$this->Contact_no\", tag=\"$this->Tag\", comment=\"$this->Comment\", created=".date('Y-m-d').";";
+            $sql="INSERT INTO location SET name='$location_name', slug='$this->Slug', status='$this->Status', location_id='$this->Location', facility='$this->Facility', asn='$this->ASN', time_zone='$this->Time_zone', description='$this->Description', physical_address='$this->Physical_address', shipping_address='$this->Shipping_address', latitude='$this->Latitude', longitude='$this->Longitude', contact_name='$this->Contact_name', contact_email='$this->Contact_email', contact_no='$this->Contact_no', tag='$this->Tag', comment='$this->Comment', created=".date('Y-m-d').";";
             
             if(!$dbh->exec($sql)){
                     error_log( "SQL Error: " . $sql );
@@ -364,7 +380,7 @@ class Location {
 	function UpdateObject(){
             $this->MakeSafe();
 
-            $sql="UPDATE location SET name=\"$this->Name\", slug=\"$this->Slug\", status=\"$this->Status\", location_id=\"$this->Location\", facility=\"$this->Facility\", asn=\"$this->ASN\", time_zone=\"$this->Time_zone\", description=\"$this->Description\", physical_address=\"$this->Physical_address\", shipping_address=\"$this->Shipping_address\", latitude=\"$this->Latitude\", longitude=\"$this->Longitude\", contact_name=\"$this->Contact_name\", contact_email=\"$this->Contact_email\", contact_no=\"$this->Contact_no\", tag=\"$this->Tag\", comment=\"$this->Comment\", last_updated=".date('Y-m-d')." WHERE id=$this->PortID;";
+            $sql="UPDATE location SET name='$this->Name', slug='$this->Slug', status='$this->Status', location_id='$this->Location', facility='$this->Facility', asn='$this->ASN', time_zone='$this->Time_zone', description='$this->Description', physical_address='$this->Physical_address', shipping_address='$this->Shipping_address', latitude='$this->Latitude', longitude='$this->Longitude', contact_name='$this->Contact_name', contact_email='$this->Contact_email', contact_no='$this->Contact_no', tag='$this->Tag', comment='$this->Comment', last_updated=".date('Y-m-d')." WHERE id=$this->PortID;";
             
             $old=new Location();
             $old->PortID=$this->PortID;
