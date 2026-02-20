@@ -264,12 +264,15 @@ class Location {
             
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
-                    if($indexbyid){
-                            $ManufacturerList[$row['PortID']]=Location::RowToObject($row);
-                    }else{
-                            $ManufacturerList[]=Location::RowToObject($row);
-                    }
+            $result = $dbh->query($sql);
+            if ($result) {
+                foreach($result as $row){
+                        if($indexbyid){
+                                $ManufacturerList[$row['PortID']]=Location::RowToObject($row);
+                        }else{
+                                $ManufacturerList[]=Location::RowToObject($row);
+                        }
+                }
             }
             
             return $ManufacturerList;
@@ -355,7 +358,7 @@ class Location {
             }
             
             
-            $sql="INSERT INTO location SET name='$location_name', slug='$this->Slug', status='$this->Status', location_id='$this->Location', facility='$this->Facility', asn='$this->ASN', time_zone='$this->Time_zone', description='$this->Description', physical_address='$this->Physical_address', shipping_address='$this->Shipping_address', latitude='$this->Latitude', longitude='$this->Longitude', contact_name='$this->Contact_name', contact_email='$this->Contact_email', contact_no='$this->Contact_no', tag='$this->Tag', comment='$this->Comment', created=".date('Y-m-d').";";
+            $sql="INSERT INTO location SET name='$location_name', slug='$this->Slug', status='$this->Status', location_id='$this->Location', facility='$this->Facility', asn='$this->ASN', time_zone='$this->Time_zone', description='$this->Description', physical_address='$this->Physical_address', shipping_address='$this->Shipping_address', latitude='$this->Latitude', longitude='$this->Longitude', contact_name='$this->Contact_name', contact_email='$this->Contact_email', contact_no='$this->Contact_no', tag='$this->Tag', comment='$this->Comment', created='".date('Y-m-d')."'";
             
             if(!$dbh->exec($sql)){
                     error_log( "SQL Error: " . $sql );
@@ -380,7 +383,7 @@ class Location {
 	function UpdateObject(){
             $this->MakeSafe();
 
-            $sql="UPDATE location SET name='$this->Name', slug='$this->Slug', status='$this->Status', location_id='$this->Location', facility='$this->Facility', asn='$this->ASN', time_zone='$this->Time_zone', description='$this->Description', physical_address='$this->Physical_address', shipping_address='$this->Shipping_address', latitude='$this->Latitude', longitude='$this->Longitude', contact_name='$this->Contact_name', contact_email='$this->Contact_email', contact_no='$this->Contact_no', tag='$this->Tag', comment='$this->Comment', last_updated=".date('Y-m-d')." WHERE id=$this->PortID;";
+            $sql="UPDATE location SET name='$this->Name', slug='$this->Slug', status='$this->Status', location_id='$this->Location', facility='$this->Facility', asn='$this->ASN', time_zone='$this->Time_zone', description='$this->Description', physical_address='$this->Physical_address', shipping_address='$this->Shipping_address', latitude='$this->Latitude', longitude='$this->Longitude', contact_name='$this->Contact_name', contact_email='$this->Contact_email', contact_no='$this->Contact_no', tag='$this->Tag', comment='$this->Comment', last_updated='".date('Y-m-d')."' WHERE id=$this->PortID;";
             
             $old=new Location();
             $old->PortID=$this->PortID;
