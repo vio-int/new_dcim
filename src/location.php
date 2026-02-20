@@ -75,12 +75,14 @@ if (isset($_REQUEST['PortID']) && $_REQUEST['PortID'] > 0) {
 }
 $imageselect = '<div id="preview"></div><div id="filelist">';
 $path = './drawings';
-$dir = scandir($path);
-foreach ($dir as $i => $f) {
-    if (is_file($path . DIRECTORY_SEPARATOR . $f)) {
-        $mimeType = mime_content_type($path . DIRECTORY_SEPARATOR . $f);
-        if (preg_match('/^image/i', $mimeType)) {
-            $imageselect .= "<span>$f</span>\n";
+$dir = @scandir($path);
+if ($dir) {
+    foreach ($dir as $i => $f) {
+        if (is_file($path . DIRECTORY_SEPARATOR . $f)) {
+            $mimeType = mime_content_type($path . DIRECTORY_SEPARATOR . $f);
+            if (preg_match('/^image/i', $mimeType)) {
+                $imageselect .= "<span>$f</span>\n";
+            }
         }
     }
 }
