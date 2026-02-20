@@ -11,8 +11,8 @@
 		$array=array();
 		$path=(in_array($_POST['dir'],array('drawings','pictures')))?$_POST['dir']:'';
 		if(is_dir($path)){
-			$dir=scandir($path);
-			foreach($dir as $i => $f){
+			$dir=@scandir($path);
+			if($dir) foreach($dir as $i => $f){
 				if(is_file($path.DIRECTORY_SEPARATOR.$f) && ($f!='.' && $f!='..' && $f!='P_ERROR.png')){
 					$mimeType=mime_content_type($path.DIRECTORY_SEPARATOR.$f);
 					if(preg_match('/^image/i', $mimeType)){

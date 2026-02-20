@@ -97,13 +97,16 @@ function printrow($file,&$wantedpaths,$userid,$grpid){
 }
 
 $directory=".";
-$scanned_directory = array_diff(scandir($directory), array('..', '.'));
-foreach($scanned_directory as $i => $file){
-	if(!is_dir($file)){
-		continue;
-	}
+$scanned = @scandir($directory);
+if ($scanned) {
+	$scanned_directory = array_diff($scanned, array('..', '.'));
+	foreach($scanned_directory as $i => $file){
+		if(!is_dir($file)){
+			continue;
+		}
 
-	printrow($file,$wantedpaths,$userid,$grpid);
+		printrow($file,$wantedpaths,$userid,$grpid);
+	}
 }
 
 # Add in extra paths here that aren't part of the root loop.

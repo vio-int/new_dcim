@@ -310,13 +310,15 @@ $dcaList = DeviceCustomAttribute::GetDeviceCustomAttributeList();
 $imageselect = '<div id="preview"></div><div id="filelist">';
 
 $path = './pictures';
-$dir = scandir($path);
-foreach ($dir as $i => $f) {
-    if (is_file($path . DIRECTORY_SEPARATOR . $f)) {
-        // Suppress the getimagesize because it will error out on non-image files
-        $mimeType = mime_content_type($path . DIRECTORY_SEPARATOR . $f);
-        if (preg_match('/^image/i', $mimeType)) {
-            $imageselect .= "<span>$f</span>\n";
+$dir = @scandir($path);
+if ($dir) {
+    foreach ($dir as $i => $f) {
+        if (is_file($path . DIRECTORY_SEPARATOR . $f)) {
+            // Suppress the getimagesize because it will error out on non-image files
+            $mimeType = mime_content_type($path . DIRECTORY_SEPARATOR . $f);
+            if (preg_match('/^image/i', $mimeType)) {
+                $imageselect .= "<span>$f</span>\n";
+            }
         }
     }
 }

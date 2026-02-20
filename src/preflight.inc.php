@@ -26,9 +26,9 @@
 		$tests['gettext']['message']='';
 
 		$path='./locale';
-		$dir=scandir($path);
+		$dir=@scandir($path);
 		$lang=array();
-		foreach($dir as $i => $d){
+		if($dir) foreach($dir as $i => $d){
 			// get list of directories in locale that aren't . or ..
 			if(is_dir($path.DIRECTORY_SEPARATOR.$d) && $d!=".." && $d!="."){
 				// check the list of valid directories above to see if there is an VIO DCIM translation file present

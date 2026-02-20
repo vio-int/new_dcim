@@ -19,8 +19,8 @@
 
 		$filesonly=array();
 		$path='./images';
-		$dir=scandir($path);
-		foreach($dir as $i => $f){
+		$dir=@scandir($path);
+		if($dir) foreach($dir as $i => $f){
 			if(is_file($path.DIRECTORY_SEPARATOR.$f) && round(filesize($path.DIRECTORY_SEPARATOR.$f) / 1024, 2)>=4 && $f!="serverrack.png" && $f!="gradient.png"){
 				$mimeType=mime_content_type($path.DIRECTORY_SEPARATOR.$f);
 				if(preg_match('/^image/i', $mimeType)){
