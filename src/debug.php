@@ -17,8 +17,13 @@ foreach ($tables as $table) {
             echo "✓ Table '$table' exists<br>";
             
             // Count rows
-            $count = $dbh->query("SELECT COUNT(*) FROM $table WHERE is_deleted='N'")->fetchColumn();
-            echo "  - Rows: $count<br>";
+            $countResult = $dbh->query("SELECT COUNT(*) FROM $table WHERE is_deleted='N'");
+            if ($countResult) {
+                $count = $countResult->fetchColumn();
+                echo "  - Rows: $count<br>";
+            } else {
+                echo "  - Error counting rows<br>";
+            }
         } else {
             echo "✗ Table '$table' MISSING!<br>";
         }
