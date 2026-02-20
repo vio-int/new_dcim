@@ -157,9 +157,9 @@ class PowerConnection {
 			PDUPosition;";
 
 		$connList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$connList[$row["PDUPosition"]]=PowerConnection::RowToObject($row);
-		}
+		} }
 		return $connList;
 	}
   
@@ -170,9 +170,9 @@ class PowerConnection {
     	$sql="SELECT * FROM fac_PowerConnection WHERE DeviceID=$this->DeviceID ORDER BY DeviceConnnumber ASC, PDUID, PDUPosition";
 
 		$connList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$connList[]=PowerConnection::RowToObject($row);
-		}
+		} }
 		return $connList;
 	}    
 }

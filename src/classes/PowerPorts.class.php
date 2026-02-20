@@ -72,9 +72,9 @@ class PowerPorts {
 		$sql="SELECT * FROM fac_PowerPorts WHERE DeviceID=$this->DeviceID ORDER BY PortNumber ASC;";
 
 		$ports=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$ports[$row['PortNumber']]=PowerPorts::RowToObject($row);
-		}	
+		} }	
 		return $ports;
 	}
 
@@ -355,9 +355,9 @@ class PowerPorts {
 		$sql="SELECT * FROM fac_PowerPorts WHERE DeviceID=$dev->DeviceID;";
 		
 		$portList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$portList[$row['PortNumber']]=PowerPorts::RowToObject($row);
-		}
+		} }
 		
 		if( sizeof($portList)==0 && $dev->DeviceType!="Physical Infrastructure" ){
 			// somehow this device doesn't have ports so make them now
@@ -379,9 +379,9 @@ class PowerPorts {
 		$sql="SELECT * FROM fac_PowerPorts WHERE DeviceID=$dev->DeviceID and ConnectedDeviceID>0";
 		
 		$portList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$portList[$row['PortNumber']]=PowerPorts::RowToObject($row);
-		}
+		} }
 		
 		if( sizeof($portList)==0 && $dev->DeviceType!="Physical Infrastructure" ){
 			// somehow this device doesn't have ports so make them now
@@ -412,13 +412,14 @@ class PowerPorts {
 
 		$portList=array();
 
-		foreach($dbh->query($sql) as $portRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $portRow) {
 			if($indexedbyid){
 				$portList[$portRow["DeviceID"].$portRow["PortNumber"]]=PowerPorts::RowToObject($portRow);
 			}else{
 				$portList[]=PowerPorts::RowToObject($portRow);
 			}
-		}
+		} }
 
 		return $portList;
 	}

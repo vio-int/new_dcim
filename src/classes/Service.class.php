@@ -175,13 +175,13 @@ class Service {
             $sql="SELECT * FROM ipam_service WHERE is_deleted='N' AND virtual_machine_id > 0 ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Service::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Service::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -192,13 +192,13 @@ class Service {
             $sql="SELECT * FROM ipam_service WHERE is_deleted='N' AND device_id > 0 ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Service::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Service::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -243,13 +243,13 @@ class Service {
                 WHERE s.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Service::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Service::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -377,13 +377,13 @@ class Service {
                 WHERE s.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Service::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Service::RowToObject($row);
                     }
-            }
+            } }
             $result = json_decode(json_encode($ManufacturerList), true);
             
             // XLS CODE START

@@ -114,13 +114,13 @@ class Manufacturer {
 		$sql="SELECT * FROM fac_Manufacturer ORDER BY Name ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			if($indexbyid){
 				$ManufacturerList[$row['ManufacturerID']]=Manufacturer::RowToObject($row);
 			}else{
 				$ManufacturerList[]=Manufacturer::RowToObject($row);
 			}
-		}
+		} }
 
 		return $ManufacturerList;
 	}

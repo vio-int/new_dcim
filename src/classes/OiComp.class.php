@@ -112,13 +112,13 @@ class OiComp {
             $sql="SELECT * FROM PatchCableOIFCompat ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=OiComp::RowToObject($row);
                     }else{
                             $ManufacturerList[]=OiComp::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -129,13 +129,13 @@ class OiComp {
             $sql="SELECT *, name as inter_name FROM port_outer_interface ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=OiComp::RowToObject($row);
                     }else{
                             $ManufacturerList[]=OiComp::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -145,13 +145,13 @@ class OiComp {
             $sql="SELECT * FROM PatchCableType ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=OiComp::RowToObject($row);
                     }else{
                             $ManufacturerList[]=OiComp::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}

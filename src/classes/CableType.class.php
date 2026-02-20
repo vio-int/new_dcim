@@ -93,13 +93,13 @@ class CableType {
             $sql="SELECT * FROM PatchCableType ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=CableType::RowToObject($row);
                     }else{
                             $ManufacturerList[]=CableType::RowToObject($row);
                     }
-            }
+            } }
             //print_r($ManufacturerList);exit;
             return $ManufacturerList;
 	}

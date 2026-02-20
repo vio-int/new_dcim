@@ -229,7 +229,7 @@ class PlannedPath {
 					bf.DeviceID=ar.ConnectedDeviceID AND bf.PortNumber=-ar.ConnectedPort AND
 					bf.ConnectedDeviceID IS NULL
 				ORDER BY DeviceID1,PortNumber1,DeviceID2,PortNumber2;";
-			foreach($dbh->query($sql) as $row){
+			$result = $dbh->query($sql); if ($result) { 			foreach($result as $row) {
 				//Compruebo si tengo que anadir esta pareja
 				//I check if I have to add this pair of nodes
 				if (isset($this->candidates[$row["DeviceID2"]]) 
@@ -240,7 +240,7 @@ class PlannedPath {
 					//I add directly the mirror port of this port
 					$this->AddNodeToList($row["DeviceID2"],$row["PortNumber2"],$this->nodes[$this->DeviceID][$this->PortNumber]["weight"]+$weight_cabinet+$weight_rear, $row["DeviceID1"],-$row["PortNumber1"]);
 				}
-			}
+			} }
 			
 			//busco paneles con puertos libres en la fila actual
 			//Look for panels with free ports on actual row
@@ -262,7 +262,7 @@ class PlannedPath {
 					bf.DeviceID=ar.ConnectedDeviceID AND bf.PortNumber=-ar.ConnectedPort AND
 					bf.ConnectedDeviceID IS NULL
 				ORDER BY DeviceID1,PortNumber1,DeviceID2,PortNumber2;";
-			foreach($dbh->query($sql) as $row){
+			$result = $dbh->query($sql); if ($result) { 			foreach($result as $row) {
 				//Compruebo si tengo que anadir esta pareja
 				//I check if I have to add this pair of nodes
 				if (isset($this->candidates[$row["DeviceID2"]]) 
@@ -273,7 +273,7 @@ class PlannedPath {
 					//I add directly the mirror port of this port
 					$this->AddNodeToList($row["DeviceID2"],$row["PortNumber2"],$this->nodes[$this->DeviceID][$this->PortNumber]["weight"]+$weight_row+$weight_rear, $row["DeviceID1"],-$row["PortNumber1"]);
 				}
-			}
+			} }
 		}
 		//quito el nodo de la lista de candidatos
 		//remove the node from candidates and I include it in used_candidates

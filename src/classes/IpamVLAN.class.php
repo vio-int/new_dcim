@@ -179,13 +179,13 @@ class IpamVLAN {
             $sql="SELECT * FROM ipam_vlan WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamVLAN::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamVLAN::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -196,13 +196,13 @@ class IpamVLAN {
             $sql="SELECT * FROM ipam_vlan WHERE is_deleted='N' AND site_id={$group_id} ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]= IpamVLANGroup::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamVLANGroup::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -213,13 +213,13 @@ class IpamVLAN {
             $sql="SELECT * FROM ipam_vlan WHERE is_deleted='N' AND site_id={$location_id} ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamVLAN::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamVLAN::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -267,13 +267,13 @@ class IpamVLAN {
                 WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamVLAN::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamVLAN::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -295,13 +295,13 @@ class IpamVLAN {
                 WHERE v.is_deleted='N' ".$incr."";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IpamVLAN::RowToObject($row);
                 }else{
                     $RowList[]= IpamVLAN::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -401,13 +401,13 @@ class IpamVLAN {
                 WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamVLAN::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamVLAN::RowToObject($row);
                     }
-            }
+            } }
             $result = json_decode(json_encode($ManufacturerList), true);
             
             // XLS CODE START

@@ -98,13 +98,13 @@ class Chapter {
 		$sql="SELECT * FROM chapter ORDER BY id ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     if($indexbyid){
                         $ManufacturerList[$row['ChapterID']]=Chapter::RowToObject($row);
                     }else{
                         $ManufacturerList[]=Chapter::RowToObject($row);
                     }
-		}
+		} }
                 return $ManufacturerList;
 	}
         
@@ -114,13 +114,13 @@ class Chapter {
 		$sql="SELECT * FROM fac_ports ORDER BY DeviceID ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     	if($indexbyid){
 				$ManufacturerList[$row['ChapterID']]=Chapter::RowToObject($row);
 			}else{
 				$ManufacturerList[]=Chapter::RowToObject($row);
 			}
-		}
+		} }
                 
                 return $ManufacturerList;
 	}

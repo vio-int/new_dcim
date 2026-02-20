@@ -199,13 +199,13 @@ class IpamIPaddress {
             $sql="SELECT * FROM ipam_ipaddress WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamIPaddress::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamIPaddress::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -229,13 +229,13 @@ class IpamIPaddress {
                 WHERE a.is_deleted='N' ".$incr."";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IpamIPaddress::RowToObject($row);
                 }else{
                     $RowList[]= IpamIPaddress::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -287,13 +287,13 @@ class IpamIPaddress {
                 WHERE a.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]= IpamIPaddress::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamIPaddress::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -416,13 +416,13 @@ class IpamIPaddress {
                 WHERE a.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]= IpamIPaddress::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamIPaddress::RowToObject($row);
                     }
-            }
+            } }
             $result = json_decode(json_encode($ManufacturerList), true);
             
             // XLS CODE START

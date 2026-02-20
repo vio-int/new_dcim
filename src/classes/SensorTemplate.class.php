@@ -85,9 +85,9 @@ class SensorTemplate {
 		$sql="SELECT * FROM fac_SensorTemplate ORDER BY ManufacturerID, Model ASC;";
 		
 		$tempList = array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$tempList[]=SensorTemplate::RowToObject($row);
-		}
+		} }
 		
 		return $tempList;
 	}

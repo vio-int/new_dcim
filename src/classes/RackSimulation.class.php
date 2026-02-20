@@ -118,13 +118,13 @@ class RackSimulation {
             $sql="SELECT * FROM capacity WHERE is_deleted='N' ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=RackSimulation::RowToObject($row);
                     }else{
                             $ManufacturerList[]=RackSimulation::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -201,13 +201,13 @@ class RackSimulation {
             $sql="SELECT * FROM rack WHERE is_deleted='N' AND name='{$rack_id}'";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $ManufacturerList[$row['PortID']] = $row;
                 }else{
                     $ManufacturerList[] = $row;
                 }
-            }
+            } }
             
             return $ManufacturerList; 
         }
@@ -244,9 +244,9 @@ class RackSimulation {
             $sql="SELECT * FROM rack WHERE is_deleted='N' AND room_id='{$room_id}'";
             
             $RackList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 $RackList[$row['id']] = $row;    
-            }
+            } }
             //print_r($RackList);exit;
             return $RackList;
         }

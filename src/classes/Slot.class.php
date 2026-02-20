@@ -141,9 +141,9 @@ class Slot {
 		$sql="SELECT * FROM fac_Slots WHERE TemplateID=".intval($templateid)." ORDER 
 			BY BackSide ASC, Position ASC;";
 		$slots=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$slots[$row['BackSide']][$row['Position']]=Slot::RowToObject($row);
-		}	
+		} }	
 		return $slots;
 	}
 

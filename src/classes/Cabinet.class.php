@@ -230,14 +230,15 @@ class Cabinet {
 		$orderbydc=(!$orderbydc || $config->ParameterArray['AppendCabDC']=='enabled')?'DataCenterID, ':'';
 		$sql="SELECT * FROM fac_cabinet ORDER BY $orderbydc LENGTH(LocationSortable), LocationSortable ASC;";
 
-		foreach($dbh->query($sql) as $cabinetRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $cabinetRow) {
 			$filter = $config->ParameterArray["FilterCabinetList"] == 'Enabled' ? true:false;
 			if ( $indexed ) {
 				$cabinetList[$cabinetRow["CabinetID"]]=Cabinet::RowToObject($cabinetRow, $filter);
 			} else {
 				$cabinetList[]=Cabinet::RowToObject($cabinetRow, $filter);
 			}
-		}
+		} }
 
 		return $cabinetList;
 	}
@@ -277,9 +278,9 @@ class Cabinet {
 		$sql="SELECT c.*, d.name FROM fac_cabinet c LEFT JOIN fac_datacenter d ON(c.DataCenterID=d.DataCenterID) ORDER BY c.CabinetID DESC LIMIT 0,5;";
 		
 		$cabrowList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     $cabrowList[]=Cabinet::RowToObject($row, false);
-		}
+		} }
 		
 		return $cabrowList;
 	}
@@ -342,9 +343,9 @@ class Cabinet {
 		$sql="SELECT Owner FROM fac_device WHERE Cabinet=".intval($CabinetID)." Group By Owner;";
 
 		$occupants=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$occupants[]=$row[0];
-		}
+		} }
 
 		return $occupants;
 	}
@@ -359,10 +360,11 @@ class Cabinet {
 		$selectList='<select name="zoneid" id="zoneid">';
 		$selectList.='<option value=0>'.__("None").'</option>';
 
-		foreach($dbh->query($sql) as $selectRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $selectRow) {
 			$selected=($selectRow["ZoneID"]==$this->ZoneID)?' selected':'';
 			$selectList.="<option value=\"{$selectRow["ZoneID"]}\"$selected>{$selectRow["Description"]}</option>";
-		}
+		} }
 
 		$selectList.='</select>';
 
@@ -407,9 +409,9 @@ class Cabinet {
 			LocationSortable ASC;";
 
 		$cabinetList=array();
-		foreach($dbh->query($sql) as $cabinetRow){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $cabinetRow) {
 			$cabinetList[]=Cabinet::RowToObject($cabinetRow);
-		}
+		} }
 
 		if($frontedge=="Right" || $frontedge=="Top"){
 			$cabinetList=array_reverse($cabinetList);
@@ -428,10 +430,11 @@ class Cabinet {
 		$selectList='<select name="cabrowid" id="cabrowid">';
 		$selectList.='<option value=0>'.__("None").'</option>';
 		
-		foreach($dbh->query($sql) as $selectRow){
+		$result = $dbh->query($sql); if ($result) { 		
+		foreach($result as $selectRow) {
 			$selected=($selectRow["CabRowID"]==$this->CabRowID)?' selected':'';
 			$selectList.="<option value=\"{$selectRow["CabRowID"]}\"$selected>{$selectRow["Name"]}</option>";
-		}
+		} }
 
 		$selectList.='</select>';
 
@@ -448,12 +451,13 @@ class Cabinet {
 
 		$selectList="<select name=\"CabinetID\" id=\"CabinetID\"><option value=\"-1\">Storage Room</option>";
 
-		foreach($dbh->query($sql) as $selectRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $selectRow) {
 			if($selectRow["CabinetID"]==$this->CabinetID || $person->canWrite($selectRow["AssignedTo"])){
 				$selected=($selectRow["CabinetID"]==$this->CabinetID)?' selected':'';
 				$selectList.="<option value=\"{$selectRow["CabinetID"]}\"$selected>{$selectRow["Name"]} / {$selectRow["Location"]}</option>";
 			}
-		}
+		} }
 
 		$selectList .= "</select>";
 
@@ -526,13 +530,13 @@ class Cabinet {
 		$sql="SELECT * FROM fac_cabinet $sqlextend ORDER BY LocationSortable ASC";
 
 		$cabList=array();
-		foreach($dbh->query($sql) as $cabRow){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $cabRow) {
 			if($indexedbyid){
 				$cabList[$cabRow["CabinetID"]]=Cabinet::RowToObject($cabRow);
 			}else{
 				$cabList[]=Cabinet::RowToObject($cabRow);
 			}
-		}
+		} }
 
 		return $cabList;
 	}
@@ -609,10 +613,11 @@ class Cabinet {
 		$sql="SELECT SUM(NominalWatts) AS watts, SUM(Weight) AS weight FROM 
 			fac_device WHERE Cabinet=$cab->CabinetID AND DeviceType != 'CDU';";
 
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $row) {
 			$cabstats->Weight=(!is_null($row['weight']))?$row['weight']:0;
 			$cabstats->Wattage=(!is_null($row['watts']))?$row['watts']:0;
-		}
+		} }
 
 		return $cabstats;
 	}
@@ -621,10 +626,10 @@ class Cabinet {
 		$sql="SELECT * FROM fac_devicecache WHERE DeviceID IN (SELECT DeviceID FROM 
 			fac_device WHERE Cabinet=$this->CabinetID AND ParentDevice=0);";
 		$devarray=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$devarray[$row['DeviceID']]['Front']=html_entity_decode($row['Front']);
 			$devarray[$row['DeviceID']]['Rear']=html_entity_decode($row['Rear']);
-		}
+		} }
 		return $devarray;
 	}
 }

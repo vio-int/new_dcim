@@ -159,13 +159,13 @@ class IpamVLANGroup {
             $sql="SELECT * FROM location WHERE is_deleted='N' ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Room::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Room::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -176,13 +176,13 @@ class IpamVLANGroup {
             $sql="SELECT * FROM ipam_vlangroup WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamVLANGroup::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamVLANGroup::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -193,13 +193,13 @@ class IpamVLANGroup {
             $sql="SELECT * FROM ipam_vlangroup WHERE is_deleted='N' AND site_id={$location_id} ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Rack::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Rack::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -233,13 +233,13 @@ class IpamVLANGroup {
             $sql="SELECT g.* FROM ipam_vlangroup g WHERE g.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IpamVLANGroup::RowToObject($row);
                 }else{
                     $RowList[]= IpamVLANGroup::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -255,13 +255,13 @@ class IpamVLANGroup {
             $sql="SELECT g.* FROM ipam_vlangroup g WHERE g.is_deleted='N' ".$incr."";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IpamVLANGroup::RowToObject($row);
                 }else{
                     $RowList[]= IpamVLANGroup::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -344,13 +344,13 @@ class IpamVLANGroup {
                 LEFT JOIN location l ON (l.id=g.site_id) WHERE g.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']] = IpamVLANGroup::RowToObject($row);
                 }else{
                     $RowList[] = IpamVLANGroup::RowToObject($row);
                 }
-            }
+            } }
             $result = json_decode(json_encode($RowList), true);
             
             // XLS CODE START

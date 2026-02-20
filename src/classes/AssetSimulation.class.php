@@ -115,13 +115,13 @@ class AssetSimulation {
             $sql="SELECT * FROM capacity WHERE is_deleted='N' ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetSimulation::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetSimulation::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -204,13 +204,13 @@ class AssetSimulation {
                 WHERE a.is_deleted='N' AND a.is_simulation='N' AND a.rack_id={$rack_id}";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetSimulation::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetSimulation::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList; 
         }
@@ -227,13 +227,13 @@ class AssetSimulation {
                 WHERE a.is_deleted='N' AND a.rack_id={$rack_id}";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetSimulation::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetSimulation::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList; 
         }

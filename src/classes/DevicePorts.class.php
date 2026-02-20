@@ -84,9 +84,9 @@ class DevicePorts {
 		$sql="SELECT * FROM fac_ports WHERE DeviceID=$this->DeviceID $clause ORDER BY PortNumber ASC;";
 
 		$ports=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$ports[$row['PortNumber']]=DevicePorts::RowToObject($row);
-		}	
+		} }	
 		return $ports;
 	}
 
@@ -548,19 +548,19 @@ class DevicePorts {
 				Cabinet!=$cabinetID $rights$pp$limiter GROUP BY DeviceID ORDER BY Label ASC;";
 			
 			foreach(array($sqlSameCabDevice, $sqlDiffCabDevice) as $sql){
-				foreach($dbh->query($sql) as $row){
+				$result = $dbh->query($sql); if ($result) { 				foreach($result as $row) {
 					// false to skip rights check we filtered using sql above
 					$tmpDev=Device::RowToObject($row,false);
 					$candidates[]=array("DeviceID"=>$tmpDev->DeviceID,"Label"=>$tmpDev->Label,"CabinetID"=>$tmpDev->Cabinet);
-				}
+				} }
 			}
 		}else{
 			$sql="SELECT a.*, b.Cabinet as CabinetID FROM fac_ports a, fac_device b WHERE 
 				Ports>0 AND Cabinet>-1 AND a.DeviceID=b.DeviceID AND 
 				a.DeviceID!=$dev->DeviceID AND ConnectedDeviceID IS NULL$mediaenforce$pp;";
-			foreach($dbh->query($sql) as $row){
+			$result = $dbh->query($sql); if ($result) { 			foreach($result as $row) {
 				$candidates[]=array("DeviceID"=>$row["DeviceID"], "Label"=>$row["Label"], "CabinetID"=>$row["CabinetID"]);
-			}
+			} }
 		}
 
 		return $candidates;
@@ -578,9 +578,9 @@ class DevicePorts {
 		$sql="SELECT * FROM fac_ports WHERE DeviceID=$dev->DeviceID;";
 		
 		$portList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$portList[$row['PortNumber']]=DevicePorts::RowToObject($row);
-		}
+		} }
 		
 		if( sizeof($portList)==0 && $dev->DeviceType!="Physical Infrastructure" ){
 			// somehow this device doesn't have ports so make them now
@@ -612,13 +612,14 @@ class DevicePorts {
 
 		$portList=array();
 
-		foreach($dbh->query($sql) as $portRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $portRow) {
 			if($indexedbyid){
 				$portList[$portRow["DeviceID"].$portRow["PortNumber"]]=DevicePorts::RowToObject($portRow);
 			}else{
 				$portList[]=DevicePorts::RowToObject($portRow);
 			}
-		}
+		} }
 
 		return $portList;
 	}

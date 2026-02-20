@@ -203,13 +203,13 @@ class AssetSupplier {
             $sql="SELECT * FROM asset_supplier WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetSupplier::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetSupplier::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -248,13 +248,13 @@ class AssetSupplier {
                 WHERE a.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetSupplier::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetSupplier::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -280,13 +280,13 @@ class AssetSupplier {
             $sql="SELECT *, status as status_name FROM asset_status WHERE is_deleted='N' ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetSupplier::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetSupplier::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -297,13 +297,13 @@ class AssetSupplier {
             $sql="SELECT *, status as status_name, (SELECT count(id) as total_assets FROM assets a WHERE a.status_id=id) as total_assets FROM asset_status WHERE is_deleted='N' GROUP BY id ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetSupplier::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetSupplier::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -327,13 +327,13 @@ class AssetSupplier {
             $sql="SELECT *, name as supplier_name FROM asset_supplier ORDER BY id ASC;";
 
             $ManufacturerList = array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetSupplier::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetSupplier::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -404,13 +404,13 @@ class AssetSupplier {
             
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetSupplier::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetSupplier::RowToObject($row);
                     }
-            }
+            } }
             $result = json_decode(json_encode($ManufacturerList), true);
             
             // XLS CODE START

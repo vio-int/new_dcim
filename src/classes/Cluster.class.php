@@ -176,13 +176,13 @@ class Cluster {
             $sql="SELECT * FROM location WHERE is_deleted='N' ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Room::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Room::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -193,13 +193,13 @@ class Cluster {
             $sql="SELECT * FROM cluster WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Cluster::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Cluster::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -210,13 +210,13 @@ class Cluster {
             $sql="SELECT * FROM cluster WHERE is_deleted='N' AND site_id={$location_id} ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Rack::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Rack::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -227,13 +227,13 @@ class Cluster {
             $sql="SELECT id, name FROM cluster WHERE is_deleted='N' AND group_id={$group_id} ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Rack::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Rack::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -255,13 +255,13 @@ class Cluster {
                 WHERE c.is_deleted='N' ".$incr."";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= Cluster::RowToObject($row);
                 }else{
                     $RowList[]= Cluster::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -305,13 +305,13 @@ class Cluster {
                 WHERE c.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= Cluster::RowToObject($row);
                 }else{
                     $RowList[]= Cluster::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -400,13 +400,13 @@ class Cluster {
                 WHERE c.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= Cluster::RowToObject($row);
                 }else{
                     $RowList[]= Cluster::RowToObject($row);
                 }
-            }
+            } }
             $result = json_decode(json_encode($RowList), true);
             
             // XLS CODE START

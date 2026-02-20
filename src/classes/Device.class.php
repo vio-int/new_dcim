@@ -1039,9 +1039,9 @@ class Device {
 		}
 
 		$deviceList=array();
-		foreach($dbh->query($sql) as $deviceRow){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $deviceRow) {
 			$deviceList[]=Device::RowToObject($deviceRow);
-		}
+		} }
 		
 		return $deviceList;
 	}
@@ -1053,9 +1053,9 @@ class Device {
 			intval($days)." ORDER BY InstallDate ASC;";
 		
 		$deviceList=array();
-		foreach($dbh->query($sql) as $deviceRow){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $deviceRow) {
 			$deviceList[]=Device::RowToObject($deviceRow);
-		}
+		} }
 		
 		return $deviceList;
 	}
@@ -1072,9 +1072,10 @@ class Device {
 
 		$childList = array();
 
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $row) {
 			$childList[]=Device::RowToObject($row);
-		}
+		} }
 		
 		return $childList;
 	}
@@ -1092,14 +1093,15 @@ class Device {
 		$descList = array();
 		$descList2 = array();
 
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $row) {
 			$dev=Device::RowToObject($row);
 			$descList[]=$dev;
 			if ($dev->ChassisSlots>0 || $dev->RearChassisSlots>0){
 				$descList2=$dev->GetDeviceDescendants();
 				$descList=array_merge($descList,$descList2);
 			}
-		}
+		} }
 		
 		return $descList;
 	}
@@ -1110,13 +1112,13 @@ class Device {
 		$sql="SELECT * FROM fac_device WHERE ChassisSlots>0 OR RearChassisSlots>0 ORDER BY Label ASC;";
 
 		$parentList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			// Assigning here will trigger the FilterRights method and check the cabinet rights
 			$temp=Device::RowToObject($row);
 			if($temp->DeviceID==$this->ParentDevice || $temp->Rights=="Write"){
 				$parentList[]=$temp;
 			}
-		}
+		} }
 		
 		return $parentList;
 	}
@@ -1133,9 +1135,10 @@ class Device {
 		
 		$devList = array();
 
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $row) {
 			$devList[]=Device::RowToObject($row);
-		}
+		} }
 
 		return $devList;
 	}
@@ -1148,9 +1151,10 @@ class Device {
 		
 		$devList = array();
 
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $row) {
 			$devList[]=Device::RowToObject($row);
-		}
+		} }
 
 		return $devList;
 	}
@@ -1163,9 +1167,10 @@ class Device {
 		
 		$devList = array();
 
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $row) {
 			$devList[]=Device::RowToObject($row);
-		}
+		} }
 
 		return $devList;
 	}
@@ -1216,9 +1221,10 @@ class Device {
 		
 		$deviceList = array();
 
-		foreach($dbh->query($sql) as $deviceRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $deviceRow) {
 			$deviceList[]=Device::RowToObject($deviceRow);
-		}
+		} }
 
 		return $deviceList;
 	}
@@ -1282,9 +1288,10 @@ class Device {
 
 		$deviceList = array();
 
-		foreach($dbh->query($sql) as $deviceRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $deviceRow) {
 			$deviceList[$deviceRow["DeviceID"]]=Device::RowToObject($deviceRow);
-		}
+		} }
 
 		return $deviceList;
 	}
@@ -1314,9 +1321,10 @@ class Device {
 
 		$deviceList=array();
 
-		foreach($dbh->query($sql) as $deviceRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $deviceRow) {
 			$deviceList[$deviceRow["DeviceID"]]=Device::RowToObject($deviceRow);
-		}
+		} }
 
 		return $deviceList;
 	}
@@ -1328,9 +1336,10 @@ class Device {
 
 		$deviceList = array();
 
-		foreach($dbh->query($sql) as $deviceRow){ 
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $deviceRow) { 
 			$deviceList[$deviceRow["DeviceID"]]=Device::RowToObject($deviceRow);
-		}
+		} }
 
 		return $deviceList;
 	}
@@ -1376,13 +1385,14 @@ class Device {
 
 		$deviceList=array();
 
-		foreach($dbh->query($sql) as $deviceRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $deviceRow) {
 			if($indexedbyid){
 				$deviceList[$deviceRow["DeviceID"]]=Device::RowToObject($deviceRow);
 			}else{
 				$deviceList[]=Device::RowToObject($deviceRow);
 			}
-		}
+		} }
 
 		return $deviceList;
 	}
@@ -1401,9 +1411,10 @@ class Device {
 
 		$deviceList=array();
 
-		foreach($dbh->query($sql) as $deviceRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $deviceRow) {
 			$deviceList[$deviceRow["DeviceID"]]=Device::RowToObject($deviceRow);
-		}
+		} }
 
 		return $deviceList;
 	}
@@ -1417,9 +1428,10 @@ class Device {
 
 		$deviceList=array();
 
-		foreach($dbh->query($sql) as $deviceRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $deviceRow) {
 			$deviceList[$deviceRow["DeviceID"]]=Device::RowToObject($deviceRow);
-		}
+		} }
 
 		return $deviceList;
 
@@ -1432,9 +1444,10 @@ class Device {
 		$sql=sprintf("SELECT * FROM fac_device WHERE Cabinet IN (SELECT CabinetID from fac_cabinet WHERE CabRowID=%d);",$CabRowID);
 		$deviceList=array();
 
-		foreach($dbh->query($sql) as $deviceRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $deviceRow) {
 			$deviceList[]=Device::RowToObject($deviceRow);
-		}
+		} }
 
 		return $deviceList;
 	}
@@ -1517,9 +1530,10 @@ class Device {
 
 		$deviceList = array();
 
-		foreach($dbh->query($sql) as $deviceRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $deviceRow) {
 			$deviceList[$deviceRow["DeviceID"]]=Device::RowToObject($deviceRow);
-		}
+		} }
 		
 		return $deviceList;
 	}
@@ -1595,9 +1609,10 @@ class Device {
 
 		$deviceList = array();
 
-		foreach($dbh->query($sql) as $deviceRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $deviceRow) {
 			$deviceList[$deviceRow["DeviceID"]]=Device::RowToObject($deviceRow);
-		}
+		} }
 		
 		return $deviceList;
 	}
@@ -1620,9 +1635,10 @@ class Device {
 
 		$deptList = array();
 		
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		
+		foreach($result as $row) {
 			$deptList[$row["OwnerName"]]=$row["RackUnits"];
-		}
+		} }
 		  
 		return $deptList;
 	}
@@ -1638,9 +1654,10 @@ class Device {
 
 		$deptList=array();
 
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $row) {
 			$deptList[$row["OwnerName"]]=$row["TotalPower"];
-		}
+		} }
 		  
 		return $deptList;
 	}
@@ -1715,9 +1732,10 @@ class Device {
 
 		$tags=array();
 
-		foreach($dbh->query($sql) as $tagid){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $tagid) {
 			$tags[]=Tags::FindName($tagid[0]);
-		}
+		} }
 
 		return $tags;
 	}
@@ -2251,9 +2269,9 @@ class Device {
 		$sql = "SELECT v.DeviceID, v.AttributeID, a.Label, v.Value
 				FROM fac_devicecustomvalue AS v, fac_devicecustomattribute AS a
 				WHERE DeviceID = $this->DeviceID AND v.AttributeID = a.AttributeID";
-		foreach($dbh->query($sql) as $dcvrow){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $dcvrow) {
 			$this->{$dcvrow["Label"]}=$dcvrow["Value"];
-		}
+		} }
 	}	
 
 	function DeleteCustomValues() {
@@ -2293,14 +2311,15 @@ class Device {
 		
 		$sql="SELECT * FROM fac_device WHERE ParentDevice=$this->DeviceID;";
 
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $row) {
 			$dev=Device::RowToObject($row);
 			$dev->Cabinet=$this->Cabinet;
 			$dev->UpdateDevice();
 			if ($dev->ChassisSlots>0 || $dev->RearChassisSlots>0){
 				$dev->SetChildDevicesCabinet();
 			}
-		}
+		} }
 	}
 
 	// Making a function we can call from a device that will update itself and any other sensor in its immediate vicinity
@@ -2323,7 +2342,8 @@ class Device {
 		$sql="SELECT DeviceID FROM fac_device WHERE DeviceType=\"Sensor\" AND 
 			PrimaryIP!=\"\" AND TemplateID>0 AND SNMPFailureCount<3$cablimit;";
 
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $row) {
 			if(!$dev=Device::BasicTests($row['DeviceID'])){
 				// This device failed the basic test but maybe the next won't
 				continue;
@@ -2376,7 +2396,7 @@ class Device {
 				error_log( "UpdateSensors::PDO Error: {$info[2]} SQL=$insertsql" );
 				return false;
 			}
-		}
+		} }
 
 		return true;			
 	}

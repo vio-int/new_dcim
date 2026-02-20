@@ -201,14 +201,15 @@ class AC {
 		$orderbydc=(!$orderbydc || $config->ParameterArray['AppendAcDC']=='enabled')?'DataCenterID, ':'';
 		$sql="SELECT * FROM fac_ac ORDER BY $orderbydc LENGTH(LocationSortable), LocationSortable ASC;";
 
-		foreach($dbh->query($sql) as $acRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $acRow) {
 			$filter = $config->ParameterArray["FilterACList"] == 'Enabled' ? true:false;
 			if ( $indexed ) {
 				$acList[$acRow["ACID"]]=AC::RowToObject($acRow, $filter);
 			} else {
 				$acList[]=AC::RowToObject($acRow, $filter);
 			}
-		}
+		} }
 
 		return $acList;
 	}
@@ -332,10 +333,11 @@ class AC {
 		$selectList='<select name="zoneid" id="zoneid">';
 		$selectList.='<option value=0>'.__("None").'</option>';
 
-		foreach($dbh->query($sql) as $selectRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $selectRow) {
 			$selected=($selectRow["ZoneID"]==$this->ZoneID)?' selected':'';
 			$selectList.="<option value=\"{$selectRow["ZoneID"]}\"$selected>{$selectRow["Description"]}</option>";
-		}
+		} }
 
 		$selectList.='</select>';
 
@@ -380,9 +382,9 @@ class AC {
 			LocationSortable ASC;";
 
 		$acList=array();
-		foreach($dbh->query($sql) as $acRow){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $acRow) {
 			$acList[]=AC::RowToObject($acRow);
-		}
+		} }
 
 		// if($frontedge=="Right" || $frontedge=="Top"){
 		// 	$cabinetList=array_reverse($cabinetList);
@@ -401,10 +403,11 @@ class AC {
 		$selectList='<select name="cabrowid" id="cabrowid">';
 		$selectList.='<option value=0>'.__("None").'</option>';
 		
-		foreach($dbh->query($sql) as $selectRow){
+		$result = $dbh->query($sql); if ($result) { 		
+		foreach($result as $selectRow) {
 			$selected=($selectRow["CabRowID"]==$this->CabRowID)?' selected':'';
 			$selectList.="<option value=\"{$selectRow["CabRowID"]}\"$selected>{$selectRow["Name"]}</option>";
-		}
+		} }
 
 		$selectList.='</select>';
 
@@ -421,12 +424,13 @@ class AC {
 
 		$selectList="<select name=\"CabinetID\" id=\"CabinetID\"><option value=\"-1\">Storage Room</option>";
 
-		foreach($dbh->query($sql) as $selectRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $selectRow) {
 			if($selectRow["ACID"]==$this->ACID || $person->canWrite($selectRow["AssignedTo"])){
 				$selected=($selectRow["ACID"]==$this->ACID)?' selected':'';
 				$selectList.="<option value=\"{$selectRow["ACID"]}\"$selected>{$selectRow["Name"]} / {$selectRow["Location"]}</option>";
 			}
-		}
+		} }
 
 		$selectList .= "</select>";
 
@@ -500,13 +504,13 @@ class AC {
 		$sql="SELECT * FROM fac_ac $sqlextend ORDER BY LocationSortable ASC";
 
 		$acList=array();
-		foreach($dbh->query($sql) as $cabRow){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $cabRow) {
 			if($indexedbyid){
 				$acList[$cabRow["ACID"]]=AC::RowToObject($cabRow);
 			}else{
 				$acList[]=AC::RowToObject($cabRow);
 			}
-		}
+		} }
 
 		return $acList;
 	}

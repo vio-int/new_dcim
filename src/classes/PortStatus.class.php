@@ -101,13 +101,13 @@ class PortStatus {
 		$sql="SELECT * FROM fac_ports ORDER BY DeviceID ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     	if($indexbyid){
 				$ManufacturerList[$row['PortID']]=PortStatus::RowToObject($row);
 			}else{
 				$ManufacturerList[]=PortStatus::RowToObject($row);
 			}
-		}
+		} }
                 
                 return $ManufacturerList;
 	}

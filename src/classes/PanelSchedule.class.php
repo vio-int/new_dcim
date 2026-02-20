@@ -56,7 +56,8 @@ class PanelSchedule {
 
 		$sql="SELECT * FROM fac_PanelSchedule WHERE PanelID=$this->PanelID ORDER BY PolePosition ASC;";
 
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $row) {
 			$sched[$row["PolePosition"]]="<td rowspan={$row["NumPoles"]}>{$row["Label"]}</td>";
 		  
 			if($row["NumPoles"] >1){
@@ -70,7 +71,7 @@ class PanelSchedule {
 			for($i=1; $i< $pan->NumberOfPoles + 1; $i++){
 				$html .= "<tr><td>$i</td>{$sched[$i]}<td>".($i+1)."</td>{$sched[++$i]}</tr>\n";
 			}
-		}
+		} }
 
 		$html .= "</table>\n";
 

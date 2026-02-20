@@ -105,13 +105,13 @@ class Dictionary {
 		$sql="SELECT * FROM dictionary ORDER BY id ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     if($indexbyid){
                         $ManufacturerList[$row['DictionaryID']]=Dictionary::RowToObject($row);
                     }else{
                         $ManufacturerList[]=Dictionary::RowToObject($row);
                     }
-		}
+		} }
                 return $ManufacturerList;
 	}
         
@@ -121,13 +121,13 @@ class Dictionary {
 		$sql="SELECT * FROM Chapter ORDER BY id ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['ChapterID']]=Chapter::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Chapter::RowToObject($row);
                     }
-		}
+		} }
                 
                 return $ManufacturerList;
 	}

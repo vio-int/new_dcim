@@ -104,13 +104,13 @@ class Attributes {
 		$sql="SELECT * FROM attributes ORDER BY id ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     	if($indexbyid){
 				$ManufacturerList[$row['PortID']]=Attributes::RowToObject($row);
 			}else{
 				$ManufacturerList[]=Attributes::RowToObject($row);
 			}
-		}
+		} }
                 
 		return $ManufacturerList;
 	}
@@ -121,13 +121,13 @@ class Attributes {
 		$sql="SELECT * FROM dictionary ORDER BY id ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     	if($indexbyid){
 				$ManufacturerList[$row['PortID']]=Attributes::RowToObject($row);
 			}else{
 				$ManufacturerList[]=Attributes::RowToObject($row);
 			}
-		}
+		} }
                 
                 return $ManufacturerList;
 	}

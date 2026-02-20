@@ -159,13 +159,13 @@ class IpamVRF {
             $sql="SELECT * FROM ipam_vrf WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamVRF::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamVRF::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -182,13 +182,13 @@ class IpamVRF {
             $sql="SELECT v.* FROM ipam_vrf v WHERE v.is_deleted='N' ".$incr."";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IpamVRF::RowToObject($row);
                 }else{
                     $RowList[]= IpamVRF::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
 	
@@ -221,13 +221,13 @@ class IpamVRF {
             $sql="SELECT v.* FROM ipam_vrf v WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IpamVRF::RowToObject($row);
                 }else{
                     $RowList[]= IpamVRF::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -318,13 +318,13 @@ class IpamVRF {
                 FROM ipam_vrf v WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IpamVRF::RowToObject($row);
                 }else{
                     $RowList[]= IpamVRF::RowToObject($row);
                 }
-            }
+            } }
             $result = json_decode(json_encode($RowList), true);
             
             // XLS CODE START

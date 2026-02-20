@@ -119,13 +119,13 @@ class Capacity {
             $sql="SELECT * FROM capacity WHERE is_deleted='N' ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Capacity::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Capacity::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -147,13 +147,13 @@ class Capacity {
                 WHERE a.is_deleted='N' ".$incr."";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= Capacity::RowToObject($row);
                 }else{
                     $RowList[]= Capacity::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -187,13 +187,13 @@ class Capacity {
                 WHERE l.is_deleted='N' ".$incr." GROUP BY l.id ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $ManufacturerList[$row['PortID']]= Capacity::RowToObject($row);
                 }else{
                     $ManufacturerList[]=Capacity::RowToObject($row);
                 }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -226,13 +226,13 @@ class Capacity {
                 WHERE r.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $ManufacturerList[$row['PortID']]= Capacity::RowToObject($row);
                 }else{
                     $ManufacturerList[]=Capacity::RowToObject($row);
                 }
-            }
+            } }
             return $ManufacturerList;
 	}
         
@@ -266,13 +266,13 @@ class Capacity {
                 WHERE r.is_deleted='N' AND r.is_simulation='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $ManufacturerList[$row['PortID']]= Capacity::RowToObject($row);
                 }else{
                     $ManufacturerList[]=Capacity::RowToObject($row);
                 }
-            }
+            } }
             return $ManufacturerList;
 	}
         
@@ -304,13 +304,13 @@ class Capacity {
                 WHERE r.is_deleted='N' AND r.is_simulation='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $ManufacturerList[$row['PortID']]= Capacity::RowToObject($row);
                 }else{
                     $ManufacturerList[]=Capacity::RowToObject($row);
                 }
-            }
+            } }
             return $ManufacturerList;
 	}
         
@@ -337,13 +337,13 @@ class Capacity {
                 WHERE d.is_deleted='N' AND d.is_simulation='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $ManufacturerList[$row['PortID']]= Capacity::RowToObject($row);
                 }else{
                     $ManufacturerList[]=Capacity::RowToObject($row);
                 }
-            }
+            } }
             
             return $ManufacturerList;
 	}

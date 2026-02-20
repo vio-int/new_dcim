@@ -228,13 +228,13 @@ class AssetManage {
             $sql="SELECT * FROM assets WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetManage::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetManage::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -245,13 +245,13 @@ class AssetManage {
             $sql="SELECT * FROM department WHERE is_deleted='N' ORDER BY name ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $ManufacturerList[$row['PortID']]=AssetManage::RowToObject($row);
                 }else{
                     $ManufacturerList[]=AssetManage::RowToObject($row);
                 }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -299,13 +299,13 @@ class AssetManage {
             
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetManage::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetManage::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -452,13 +452,13 @@ class AssetManage {
             
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetManage::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetManage::RowToObject($row);
                     }
-            }
+            } }
             $result = json_decode(json_encode($ManufacturerList), true);
             
             // XLS CODE START

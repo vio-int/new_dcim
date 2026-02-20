@@ -146,13 +146,13 @@ class AssetCategory {
             $sql="SELECT * FROM asset_category WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=AssetCategory::RowToObject($row);
                     }else{
                             $ManufacturerList[]=AssetCategory::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -184,13 +184,13 @@ class AssetCategory {
                 WHERE c.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= AssetCategory::RowToObject($row);
                 }else{
                     $RowList[]= AssetCategory::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -273,13 +273,13 @@ class AssetCategory {
                 WHERE c.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= AssetCategory::RowToObject($row);
                 }else{
                     $RowList[]= AssetCategory::RowToObject($row);
                 }
-            }
+            } }
             $result = json_decode(json_encode($RowList), true);
             
             // XLS CODE START

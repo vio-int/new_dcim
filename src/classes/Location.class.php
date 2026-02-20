@@ -290,13 +290,13 @@ class Location {
             $sql="SELECT * FROM location WHERE is_deleted='N' ".$incr."";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if(isset($indexbyid)){
                     $RowList[$row['PortID']]= Location::RowToObject($row);
                 }else{
                     $RowList[]= Location::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -425,13 +425,13 @@ class Location {
             
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Location::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Location::RowToObject($row);
                     }
-            }
+            } }
             $result = json_decode(json_encode($ManufacturerList), true);
             
             // XLS CODE START

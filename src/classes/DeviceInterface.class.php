@@ -117,13 +117,13 @@ class DeviceInterface {
         $sql="SELECT * FROM device_interface WHERE is_deleted='N' ORDER BY id ASC;";
 
         $ManufacturerList=array();
-        foreach($dbh->query($sql) as $row){
+        $result = $dbh->query($sql); if ($result) {         foreach($result as $row) {
                 if($indexbyid){
                         $ManufacturerList[$row['PortID']]=DeviceInterface::RowToObject($row);
                 }else{
                         $ManufacturerList[]=DeviceInterface::RowToObject($row);
                 }
-        }
+        } }
 
         return $ManufacturerList;
     }
@@ -168,13 +168,13 @@ class DeviceInterface {
             WHERE s.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
 
         $ManufacturerList=array();
-        foreach($dbh->query($sql) as $row){
+        $result = $dbh->query($sql); if ($result) {         foreach($result as $row) {
                 if($indexbyid){
                         $ManufacturerList[$row['PortID']]=DeviceInterface::RowToObject($row);
                 }else{
                         $ManufacturerList[]=DeviceInterface::RowToObject($row);
                 }
-        }
+        } }
 
         return $ManufacturerList;
     }

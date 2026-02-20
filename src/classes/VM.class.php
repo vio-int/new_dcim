@@ -50,10 +50,11 @@ class VM {
 		$vmList=array();
 		$vmCount=0;
 
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $row) {
 			$vmList[$vmCount]=VM::RowToObject($row);
 			$vmCount++;
-		}
+		} }
 
 		return $vmList;
 	}

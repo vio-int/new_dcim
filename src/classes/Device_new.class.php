@@ -280,13 +280,13 @@ class Device_new {
             $sql="SELECT * FROM device WHERE is_deleted='N' AND is_simulation='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Device_new::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Device_new::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -297,13 +297,13 @@ class Device_new {
             $sql="SELECT * FROM location WHERE is_deleted='N' ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Room::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Room::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -314,13 +314,13 @@ class Device_new {
             $sql="SELECT * FROM device WHERE is_deleted='N' AND is_simulation='N' AND rack_id={$rack_id} ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]= Device_new::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Device_new::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -331,13 +331,13 @@ class Device_new {
             $sql="SELECT * FROM device WHERE is_deleted='N' AND is_simulation='N' ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Room::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Room::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -390,13 +390,13 @@ class Device_new {
                 WHERE d.is_deleted='N' AND d.is_simulation='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Device_new::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Device_new::RowToObject($row);
                     }
-            }
+            } }
             return $ManufacturerList;
 	}
         
@@ -417,13 +417,13 @@ class Device_new {
                 WHERE d.is_deleted='N' AND d.is_simulation='N' ".$incr."";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if(isset($indexbyid)){
                     $RowList[$row['PortID']]= Device_new::RowToObject($row);
                 }else{
                     $RowList[]= Device_new::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -560,13 +560,13 @@ class Device_new {
                 WHERE d.is_deleted='N' AND d.is_simulation='N'".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Device_new::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Device_new::RowToObject($row);
                     }
-            }
+            } }
             $result = json_decode(json_encode($ManufacturerList), true);
             
             // XLS CODE START

@@ -429,13 +429,13 @@ class Asset {
             $sql="SELECT * FROM department WHERE is_deleted='N' ORDER BY name ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $ManufacturerList[$row['PortID']]=Asset::RowToObject($row);
                 }else{
                     $ManufacturerList[]=Asset::RowToObject($row);
                 }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -480,13 +480,13 @@ class Asset {
                 WHERE a.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Asset::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Asset::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -567,13 +567,13 @@ class Asset {
                 WHERE s.is_deleted='N' ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Asset::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Asset::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -597,13 +597,13 @@ class Asset {
             $sql="SELECT *, name as supplier_name FROM asset_supplier ORDER BY id ASC;";
 
             $ManufacturerList = array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Asset::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Asset::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -734,9 +734,9 @@ class Asset {
             $sql="SELECT * FROM assets WHERE is_deleted='N' AND id={$this->PortID};";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 $ManufacturerList[]=Asset::RowToObject($row);
-            }
+            } }
             
             if($this->Purchase_date !="")
             {
@@ -789,9 +789,9 @@ class Asset {
             $sql="SELECT * FROM assets WHERE is_deleted='N' AND is_simulation='N' AND id={$edit_data_id};";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 $ManufacturerList[]=Asset::RowToObject($row);
-            }
+            } }
             $last_main_date = $ManufacturerList[0]->Last_main_date;
             $next_main_date = $ManufacturerList[0]->Next_main_date;
             if($status =="completed")
@@ -860,13 +860,13 @@ class Asset {
                 WHERE a.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Asset::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Asset::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -909,13 +909,13 @@ class Asset {
             
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Asset::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Asset::RowToObject($row);
                     }
-            }
+            } }
             $result = json_decode(json_encode($ManufacturerList), true);
             
             // XLS CODE START

@@ -71,9 +71,9 @@ class Tags {
 		$sql="SELECT * FROM fac_Tags order by Name ASC";
 
 		$tagarray=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$tagarray[$row['TagID']]=$row['Name'];
-		}
+		} }
 		return $tagarray;
 	}
 

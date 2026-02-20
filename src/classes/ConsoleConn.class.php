@@ -164,13 +164,13 @@ class ConsoleConn {
             $sql="SELECT * FROM console_conn WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=ConsoleConn::RowToObject($row);
                     }else{
                             $ManufacturerList[]=ConsoleConn::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -187,13 +187,13 @@ class ConsoleConn {
                 LEFT JOIN device d ON(c.device_id = d.id) 
                 WHERE c.is_deleted='N' {$incr} ORDER BY id ASC;";
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $ManufacturerList[$row['PortID']]=ConsoleConn::RowToObject($row);
                 }else{
                     $ManufacturerList[]=ConsoleConn::RowToObject($row);
                 }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -228,13 +228,13 @@ class ConsoleConn {
                 WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= ConsoleConn::RowToObject($row);
                 }else{
                     $RowList[]= ConsoleConn::RowToObject($row);
                 }
-            }
+            } }
             
             return $RowList;
 	}
@@ -319,13 +319,13 @@ class ConsoleConn {
                 WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= ConsoleConn::RowToObject($row);
                 }else{
                     $RowList[]= ConsoleConn::RowToObject($row);
                 }
-            }
+            } }
             $result = json_decode(json_encode($RowList), true);
             
             // XLS CODE START

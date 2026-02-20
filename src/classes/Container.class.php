@@ -482,13 +482,13 @@ class Container {
 		$sql="SELECT * FROM fac_container ORDER BY LENGTH(Name), Name ASC;";
 
 		$containerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			if($indexedbyid){
 				$containerList[$row["ContainerID"]]=Container::RowToObject($row);
 			}else{
 				$containerList[]=Container::RowToObject($row);
 			}
-		}
+		} }
 
 		return $containerList;
 	}

@@ -92,13 +92,13 @@ class Objects {
 		$sql="SELECT * FROM Object ORDER BY name ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     	if($indexbyid){
 				$ManufacturerList[$row['ObjectID']]=Objects::RowToObject($row);
 			}else{
 				$ManufacturerList[]=Objects::RowToObject($row);
 			}
-		}
+		} }
                 
 		return $ManufacturerList;
 	}

@@ -331,13 +331,13 @@ class DeviceTemplate {
 			a.ManufacturerID=b.ManufacturerID ORDER BY Name ASC, Model ASC;";
 
 		$templateList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			if ( $indexed ) {
 				$templateList[$row["TemplateID"]]=DeviceTemplate::RowToObject($row);
 			} else {
 				$templateList[]=DeviceTemplate::RowToObject($row);
 			}
-		}
+		} }
 
 		return $templateList;
 	}

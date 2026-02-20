@@ -100,13 +100,13 @@ class ConsoleServer {
             $sql="SELECT * FROM console_server WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=ConsoleServer::RowToObject($row);
                     }else{
                             $ManufacturerList[]=ConsoleServer::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -140,13 +140,13 @@ class ConsoleServer {
                 WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= ConsoleServer::RowToObject($row);
                 }else{
                     $RowList[]= ConsoleServer::RowToObject($row);
                 }
-            }
+            } }
             
             return $RowList;
 	}
@@ -231,13 +231,13 @@ class ConsoleServer {
                 WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= ConsoleServer::RowToObject($row);
                 }else{
                     $RowList[]= ConsoleServer::RowToObject($row);
                 }
-            }
+            } }
             $result = json_decode(json_encode($RowList), true);
             
             // XLS CODE START

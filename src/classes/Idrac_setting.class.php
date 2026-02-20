@@ -180,13 +180,13 @@ class IdracSetting {
                 WHERE i.is_deleted='N' {$incr} ORDER BY i.id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IdracSetting::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IdracSetting::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -200,13 +200,13 @@ class IdracSetting {
                 WHERE i.is_deleted='N' ORDER BY i.id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IdracSetting::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IdracSetting::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -240,13 +240,13 @@ class IdracSetting {
                 WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IdracSetting::RowToObject($row);
                 }else{
                     $RowList[]= IdracSetting::RowToObject($row);
                 }
-            }
+            } }
             
             return $RowList;
 	}
@@ -350,13 +350,13 @@ class IdracSetting {
                 WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IdracSetting::RowToObject($row);
                 }else{
                     $RowList[]= IdracSetting::RowToObject($row);
                 }
-            }
+            } }
             $result = json_decode(json_encode($RowList), true);
             
             // XLS CODE START

@@ -98,13 +98,13 @@ class IPv6Allocation {
             $sql="SELECT * FROM ipv6allocation ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['MainID']]=IPv6Allocation::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IPv6Allocation::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -115,13 +115,13 @@ class IPv6Allocation {
             $sql="SELECT * FROM Object ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['ObjID']]=Objects::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Objects::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -137,13 +137,13 @@ class IPv6Allocation {
             $sql="SELECT * FROM ipv6network WHERE {$incr} ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['IPVID']]=IPv4::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IPv4::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}

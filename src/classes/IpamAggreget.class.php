@@ -165,13 +165,13 @@ class IpamAggreget {
             $sql="SELECT * FROM ipam_aggregate WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamAggreget::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamAggreget::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -208,13 +208,13 @@ class IpamAggreget {
                 WHERE a.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IpamAggreget::RowToObject($row);
                 }else{
                     $RowList[]= IpamAggreget::RowToObject($row);
                 }
-            }
+            } }
             
             return $RowList;
 	}
@@ -234,13 +234,13 @@ class IpamAggreget {
                 WHERE a.is_deleted='N' ".$incr."";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IpamAggreget::RowToObject($row);
                 }else{
                     $RowList[]= IpamAggreget::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -330,13 +330,14 @@ class IpamAggreget {
             $RowList=array();
             $RowListObj=array();
             
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             
+            foreach($result as $row) {
                 if($indexbyid){
                     $RowListObj[$row['PortID']]= IpamAggreget::RowToObject($row);
                 }else{
                     $RowListObj[]= IpamAggreget::RowToObject($row);
                 }
-            }
+            } }
             $result = json_decode(json_encode($RowListObj), true);
             
             // XLS CODE START

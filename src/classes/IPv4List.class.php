@@ -98,13 +98,13 @@ class IPv4List {
             $sql="SELECT * FROM ipv4network ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $ManufacturerList[$row['PortID']]=IPv4List::RowToObject($row);
                 }else{
                     $ManufacturerList[]=IPv4List::RowToObject($row);
                 }
-            }
+            } }
             
             return $ManufacturerList;
 	}

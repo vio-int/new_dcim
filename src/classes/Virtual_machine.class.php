@@ -201,13 +201,13 @@ class Virtual_machine {
             $sql="SELECT * FROM virtual_machine WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Virtual_machine::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Virtual_machine::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -229,13 +229,13 @@ class Virtual_machine {
                 WHERE a.is_deleted='N' ".$incr."";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= Virtual_machine::RowToObject($row);
                 }else{
                     $RowList[]= Virtual_machine::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         
@@ -285,13 +285,13 @@ class Virtual_machine {
                 WHERE a.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
               
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= Virtual_machine::RowToObject($row);
                 }else{
                     $RowList[]= Virtual_machine::RowToObject($row);
                 }
-            }
+            } }
             
             return $RowList;
 	}
@@ -399,13 +399,13 @@ class Virtual_machine {
                 WHERE a.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by}";
               
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= Virtual_machine::RowToObject($row);
                 }else{
                     $RowList[]= Virtual_machine::RowToObject($row);
                 }
-            }
+            } }
             
             $result = json_decode(json_encode($RowList), true);
             

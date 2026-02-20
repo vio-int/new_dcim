@@ -99,13 +99,13 @@ class IPv6 {
             $sql="SELECT * FROM ipv6network ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IPv6::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IPv6::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}

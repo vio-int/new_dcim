@@ -233,13 +233,14 @@ class DeviceCustomAttribute {
 			FROM fac_devicecustomattribute
 			ORDER BY Label, AttributeID;";
 
-		foreach($dbh->query($sql) as $dcaRow) {
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $dcaRow) {
 			if($indexbyname){
 				$dcaList[$dcaRow["Label"]]=DeviceCustomAttribute::RowToObject($dcaRow);
 			}else{
 				$dcaList[$dcaRow["AttributeID"]]=DeviceCustomAttribute::RowToObject($dcaRow);
 			}
-		}
+		} }
 
 		return $dcaList;
 	}

@@ -112,13 +112,13 @@ class ConnectorComp {
             $sql="SELECT * FROM ConnectorComp ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=ConnectorComp::RowToObject($row);
                     }else{
                             $ManufacturerList[]=ConnectorComp::RowToObject($row);
                     }
-            }
+            } }
 
             return $ManufacturerList;
 	}
@@ -129,13 +129,13 @@ class ConnectorComp {
             $sql="SELECT * FROM patchcableconnector ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=ConnectorComp::RowToObject($row);
                     }else{
                             $ManufacturerList[]=ConnectorComp::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -145,13 +145,13 @@ class ConnectorComp {
             $sql="SELECT * FROM PatchCableType ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=ConnectorComp::RowToObject($row);
                     }else{
                             $ManufacturerList[]=ConnectorComp::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}

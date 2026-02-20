@@ -257,13 +257,13 @@ class Rack {
                 WHERE r2.is_deleted='N' AND r2.is_simulation='N' AND r.location_id={$location_id} ORDER BY id ASC;";
                 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Rack::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Rack::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -276,13 +276,13 @@ class Rack {
                 WHERE is_deleted='N' AND is_simulation='N' AND room_id={$room_id} ORDER BY id ASC;";
                 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Rack::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Rack::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -327,13 +327,13 @@ class Rack {
                 WHERE r.is_deleted='N' AND r.is_simulation='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Rack::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Rack::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -352,13 +352,13 @@ class Rack {
                 WHERE r.is_deleted='N' AND r.is_simulation='N' ".$incr."";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if(isset($indexbyid)){
                     $RowList[$row['PortID']]= Rack::RowToObject($row);
                 }else{
                     $RowList[]= Rack::RowToObject($row);
                 }
-            }
+            } }
             
             return $RowList;
 	}
@@ -592,9 +592,9 @@ class Rack {
                 WHERE is_deleted='N' AND is_simulation='N' {$incr}";
             
             $RackList = array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 $RackList[]= $row;
-            }
+            } }
             
             return $RackList;
 	}
@@ -750,13 +750,13 @@ class Rack {
                 WHERE r.is_deleted='N' AND r.is_simulation='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Rack::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Rack::RowToObject($row);
                     }
-            }
+            } }
             $result = json_decode(json_encode($ManufacturerList), true);
             
             // XLS CODE START

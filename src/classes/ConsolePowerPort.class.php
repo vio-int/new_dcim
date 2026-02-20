@@ -102,13 +102,13 @@ class ConsolePowerPort {
             $sql="SELECT * FROM console_power_port WHERE is_deleted='N' AND type='{$type}' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=ConsolePowerPort::RowToObject($row);
                     }else{
                             $ManufacturerList[]=ConsolePowerPort::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -119,13 +119,13 @@ class ConsolePowerPort {
             $sql="SELECT * FROM console_power_port WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=ConsolePowerPort::RowToObject($row);
                     }else{
                             $ManufacturerList[]=ConsolePowerPort::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -159,13 +159,13 @@ class ConsolePowerPort {
                 WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= ConsolePowerPort::RowToObject($row);
                 }else{
                     $RowList[]= ConsolePowerPort::RowToObject($row);
                 }
-            }
+            } }
             
             return $RowList;
 	}

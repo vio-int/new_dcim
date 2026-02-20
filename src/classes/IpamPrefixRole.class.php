@@ -150,13 +150,13 @@ class IpamPrefixRole {
             $sql="SELECT * FROM location WHERE is_deleted='N' ORDER BY id ASC;";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Room::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Room::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -167,13 +167,13 @@ class IpamPrefixRole {
             $sql="SELECT * FROM ipam_role WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamPrefixRole::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamPrefixRole::RowToObject($row);
                     }
-            }
+            } }
             return $ManufacturerList;
 	}
         
@@ -183,13 +183,13 @@ class IpamPrefixRole {
             $sql="SELECT * FROM ipam_role WHERE is_deleted='N' AND site_id={$location_id} ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=Rack::RowToObject($row);
                     }else{
                             $ManufacturerList[]=Rack::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -224,13 +224,13 @@ class IpamPrefixRole {
                     FROM ipam_role r WHERE r.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IpamPrefixRole::RowToObject($row);
                 }else{
                     $RowList[]= IpamPrefixRole::RowToObject($row);
                 }
-            }
+            } }
             
             return $RowList;
 	}
@@ -311,13 +311,13 @@ class IpamPrefixRole {
             $sql="SELECT r.* FROM ipam_role r WHERE r.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IpamPrefixRole::RowToObject($row);
                 }else{
                     $RowList[]= IpamPrefixRole::RowToObject($row);
                 }
-            }
+            } }
             $result = json_decode(json_encode($RowList), true);
             
             // XLS CODE START

@@ -100,13 +100,13 @@ class ColorCoding {
 		$sql="SELECT * FROM fac_colorcoding ORDER BY Name ASC";
 		
 		$codeList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$n=$row[$indexedby]; // index array by id
 			$codeList[$n]=new ColorCoding();
 			$codeList[$n]->ColorID=$row["ColorID"];
 			$codeList[$n]->Name=$row["Name"];
 			$codeList[$n]->DefaultNote=$row["DefaultNote"];
-		}
+		} }
 		
 		return $codeList;
 	}

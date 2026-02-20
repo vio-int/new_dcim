@@ -104,13 +104,13 @@ class IpamIPaddressBulk {
             $sql="SELECT * FROM ipam_ipaddressbulk ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamIPaddressBulk::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamIPaddressBulk::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}

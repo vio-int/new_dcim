@@ -162,13 +162,13 @@ class PowerConn {
             $sql="SELECT * FROM power_conn WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=PowerConn::RowToObject($row);
                     }else{
                             $ManufacturerList[]=PowerConn::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -201,13 +201,13 @@ class PowerConn {
                 LEFT JOIN device d ON(d.id=v.device_id) WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= PowerConn::RowToObject($row);
                 }else{
                     $RowList[]= PowerConn::RowToObject($row);
                 }
-            }
+            } }
             
             return $RowList;
 	}
@@ -290,13 +290,13 @@ class PowerConn {
                 LEFT JOIN device d ON(d.id=v.device_id) WHERE v.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= PowerConn::RowToObject($row);
                 }else{
                     $RowList[]= PowerConn::RowToObject($row);
                 }
-            }
+            } }
             $result = json_decode(json_encode($RowList), true);
             
             // XLS CODE START

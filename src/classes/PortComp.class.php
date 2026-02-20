@@ -104,13 +104,13 @@ class PortComp {
 		$sql="SELECT * FROM PortCompat ORDER BY id ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     	if($indexbyid){
 				$ManufacturerList[$row['PortID']]=PortComp::RowToObject($row);
 			}else{
 				$ManufacturerList[]=PortComp::RowToObject($row);
 			}
-		}
+		} }
                 
 		return $ManufacturerList;
 	}
@@ -121,13 +121,13 @@ class PortComp {
 		$sql="SELECT * FROM fac_ports ORDER BY DeviceID ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     	if($indexbyid){
 				$ManufacturerList[$row['PortID']]=PortComp::RowToObject($row);
 			}else{
 				$ManufacturerList[]=PortComp::RowToObject($row);
 			}
-		}
+		} }
                 
                 return $ManufacturerList;
 	}

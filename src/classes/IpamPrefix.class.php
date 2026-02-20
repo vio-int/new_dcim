@@ -196,13 +196,13 @@ class IpamPrefix {
             $sql="SELECT * FROM ipam_prefix WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamPrefix::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamPrefix::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -212,13 +212,13 @@ class IpamPrefix {
             $sql="SELECT * FROM ipam_prefix WHERE is_deleted='N' AND site_id={$location_id} ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamPrefix::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamPrefix::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -270,13 +270,13 @@ class IpamPrefix {
                 WHERE p.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by} LIMIT {$start_from} , {$limit};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamPrefix::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamPrefix::RowToObject($row);
                     }
-            }
+            } }
             
             return $ManufacturerList;
 	}
@@ -300,13 +300,13 @@ class IpamPrefix {
                 WHERE p.is_deleted='N' ".$incr."";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= IpamPrefix::RowToObject($row);
                 }else{
                     $RowList[]= IpamPrefix::RowToObject($row);
                 }
-            }
+            } }
             
             return $RowList;
 	}
@@ -427,13 +427,13 @@ class IpamPrefix {
                 WHERE p.is_deleted='N' ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                     if($indexbyid){
                             $ManufacturerList[$row['PortID']]=IpamPrefix::RowToObject($row);
                     }else{
                             $ManufacturerList[]=IpamPrefix::RowToObject($row);
                     }
-            }
+            } }
             $result = json_decode(json_encode($ManufacturerList), true);
             
             // XLS CODE START

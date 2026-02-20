@@ -131,13 +131,13 @@ class Manufacture {
             $sql="SELECT r.* FROM manufacture r WHERE r.id>0 ".$incr." ORDER BY {$sort_on} {$sort_by};";
             
             $RowList=array();
-            foreach($dbh->query($sql) as $row){
+            $result = $dbh->query($sql); if ($result) {             foreach($result as $row) {
                 if($indexbyid){
                     $RowList[$row['PortID']]= Manufacture::RowToObject($row);
                 }else{
                     $RowList[]= Manufacture::RowToObject($row);
                 }
-            }
+            } }
             return $RowList;
 	}
         

@@ -160,14 +160,15 @@ class FacPowAtt {
 
 		$sql="SELECT * FROM fac_PowAtt ORDER BY LENGTH(LocationSortable), LocationSortable ASC;";
 
-		foreach($dbh->query($sql) as $powattidRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $powattidRow) {
 			$filter = $config->ParameterArray["FilterFacPowAttList"] == 'Enabled' ? true:false;
 			if ( $indexed ) {
 				$powattidList[$powattidRow["PowAttID"]]=FacPowAtt::RowToObject($powattidRow, $filter);
 			} else {
 				$powattidList[]=FacPowAtt::RowToObject($powattidRow, $filter);
 			}
-		}
+		} }
 
 		return $powattidList;
 	}
@@ -181,14 +182,15 @@ class FacPowAtt {
 
 		$sql="SELECT * FROM fac_PowAtt ORDER BY LENGTH(LocationSortable), LocationSortable ASC;";
 
-		foreach($dbh->query($sql) as $powattidRow){
+		$result = $dbh->query($sql); if ($result) { 
+		foreach($result as $powattidRow) {
 			$filter = $config->ParameterArray["FilterFacPowAttList"] == 'Enabled' ? true:false;
 			if ( $indexed ) {
 				$powattidList[$powattidRow["PowAttID"]]=FacPowAtt::RowToObject($powattidRow, $filter);
 			} else {
 				$powattidList[]=FacPowAtt::RowToObject($powattidRow, $filter);
 			}
-		}
+		} }
 		return $powattidList;
 	}
 
@@ -267,13 +269,13 @@ class FacPowAtt {
 		$sql="SELECT * FROM fac_PowAtt $sqlextend ORDER BY LocationSortable ASC";
 
 		$powattidList=array();
-		foreach($dbh->query($sql) as $cabRow){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $cabRow) {
 			if($indexedbyid){
 				$powattidList[$cabRow["PowAttID"]]=FacPowAtt::RowToObject($cabRow);
 			}else{
 				$powattidList[]=FacPowAtt::RowToObject($cabRow);
 			}
-		}
+		} }
 
 		return $powattidList;
 	}

@@ -77,9 +77,9 @@ class TemplatePowerPorts {
 		$sql="SELECT * FROM fac_TemplatePowerPorts WHERE TemplateID=$this->TemplateID ORDER BY PortNumber ASC;";
 
 		$ports=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$ports[$row['PortNumber']]=TemplatePowerPorts::RowToObject($row);
-		}	
+		} }	
 		return $ports;
 	}
 	

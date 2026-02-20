@@ -90,9 +90,9 @@ class CDUTemplate {
 			a.ManufacturerID=b.ManufacturerID ORDER BY b.Name ASC,a.Model ASC;";
 		
 		$tmpList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			$tmpList[]=CDUTemplate::RowToObject($row);
-		}
+		} }
 		
 		return $tmpList;
 	}

@@ -99,13 +99,13 @@ class PortOinter {
 		$sql="SELECT * FROM port_outer_interface ORDER BY id ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     	if($indexbyid){
 				$ManufacturerList[$row['PortID']]=PortOinter::RowToObject($row);
 			}else{
 				$ManufacturerList[]=PortOinter::RowToObject($row);
 			}
-		}
+		} }
                 //print_r($ManufacturerList);exit;
 		return $ManufacturerList;
 	}

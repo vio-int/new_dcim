@@ -223,13 +223,13 @@ class Zone {
 		$sql="SELECT * FROM fac_Zone ORDER BY DataCenterID ASC, Description ASC;";
 
 		$zoneList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			if($indexedbyid){
 				$zoneList[$row['ZoneID']]=Zone::RowToObject($row);
 			}else{
 				$zoneList[]=Zone::RowToObject($row);
 			}
-		}
+		} }
 		
 		return $zoneList;
 	}
@@ -241,13 +241,13 @@ class Zone {
 		$sql="SELECT z.*,d.name FROM fac_zone z LEFT JOIN fac_datacenter d ON(d.DataCenterID = z.DataCenterID) ORDER BY z.ZoneID DESC LIMIT 0,5";
 
 		$zoneList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
 			if($indexedbyid){
 				$zoneList[$row['ZoneID']]=Zone::RowToObject($row);
 			}else{
 				$zoneList[]=Zone::RowToObject($row);
 			}
-		}
+		} }
 		
 		return $zoneList;
 	}

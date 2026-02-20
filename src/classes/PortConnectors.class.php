@@ -96,13 +96,13 @@ class PortConnectors {
 		$sql="SELECT * FROM patchcableconnector ORDER BY id ASC;";
 
 		$ManufacturerList=array();
-		foreach($dbh->query($sql) as $row){
+		$result = $dbh->query($sql); if ($result) { 		foreach($result as $row) {
                     	if($indexbyid){
 				$ManufacturerList[$row['PortID']]=PortConnectors::RowToObject($row);
 			}else{
 				$ManufacturerList[]=PortConnectors::RowToObject($row);
 			}
-		}
+		} }
                 //print_r($ManufacturerList);exit;
 		return $ManufacturerList;
 	}

@@ -108,7 +108,7 @@ class RackRequest {
     $sql="SELECT * FROM fac_RackRequest WHERE CompleteTime='0000-00-00 00:00:00'";
     
     $requestList=array();
-	foreach($dbh->query($sql) as $row){ 
+	$result = $dbh->query($sql); if ($result) { 	foreach($result as $row) { 
 		$requestNum=sizeof($requestList);
 
 		$requestList[$requestNum]=new RackRequest();
@@ -132,7 +132,7 @@ class RackRequest {
 		$requestList[$requestNum]->CurrentLocation=$row["CurrentLocation"];
 		$requestList[$requestNum]->SpecialInstructions=$row["SpecialInstructions"];
 		$requestList[$requestNum]->MakeDisplay();
-    }
+    } }
     
     return $requestList;
   }
