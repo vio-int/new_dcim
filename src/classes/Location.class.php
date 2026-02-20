@@ -196,12 +196,15 @@ class Location {
             $sql="SELECT * FROM location WHERE is_deleted='N' ORDER BY id ASC;";
 
             $ManufacturerList=array();
-            foreach($dbh->query($sql) as $row){
-                    if($indexbyid){
-                            $ManufacturerList[$row['PortID']]=Location::RowToObject($row);
-                    }else{
-                            $ManufacturerList[]=Location::RowToObject($row);
-                    }
+            $result = $dbh->query($sql);
+            if ($result) {
+                foreach($result as $row){
+                        if($indexbyid){
+                                $ManufacturerList[$row['PortID']]=Location::RowToObject($row);
+                        }else{
+                                $ManufacturerList[]=Location::RowToObject($row);
+                        }
+                }
             }
             
             return $ManufacturerList;
