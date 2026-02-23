@@ -529,92 +529,103 @@ class DataCenter {
 
 
 	function GetDCStatistics(){
-                
+
 		$this->GetDataCenter();
-                
-                
-		$sql="SELECT SUM(CabinetHeight) as TotalU FROM fac_cabinet WHERE 
+
+		// Helper function to safely fetch column
+		$safeFetchColumn = function($sql) {
+			$result = $this->query($sql);
+			if ($result) {
+				$val = $result->fetchColumn();
+				return $val !== false ? $val : 0;
+			}
+			return 0;
+		};
+
+		$sql="SELECT SUM(CabinetHeight) as TotalU FROM fac_cabinet WHERE
 			DataCenterID=$this->DataCenterID;";
-                $dcStats["TotalU"]=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["TotalU"]=$safeFetchColumn($sql);
 
 		// Count the U used up by devices that are (a) not chassis cards; (b) in a cabinet in the data center; (c) not a server or array; and (d) not in the Storage Room (Cabinet=-1)
-		$sql="SELECT SUM(a.Height) as TotalU FROM fac_device a,fac_cabinet b WHERE 
+		$sql="SELECT SUM(a.Height) as TotalU FROM fac_device a,fac_cabinet b WHERE
 			a.Cabinet=b.CabinetID AND b.DataCenterID=$this->DataCenterID AND ParentDevice=0 AND
 			a.DeviceType NOT IN ('Server','Storage Array') and a.Status NOT IN ('Reserved', 'Salvage') and a.Cabinet>0;";
-		$dcStats["Infrastructure"]=($test=$this->query($sql)->fetchColumn())?$test:0;
-                
-		$sql="SELECT SUM(a.Height) as TotalU FROM fac_device a,fac_cabinet b WHERE 
+		$dcStats["Infrastructure"]=$safeFetchColumn($sql);
+
+		$sql="SELECT SUM(a.Height) as TotalU FROM fac_device a,fac_cabinet b WHERE
 			a.Cabinet=b.CabinetID AND b.DataCenterID=$this->DataCenterID AND ParentDevice=0 AND
 			a.Status not in ('Reserved', 'Salvage') AND a.DeviceType IN ('Server', 'Storage Array') and a.Cabinet>0;";
-		$dcStats["Occupied"]=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["Occupied"]=$safeFetchColumn($sql);
 
 		// There should never be a case where a device marked as reserved ends up in the Storage Room, but S.U.T. #44
 		$sql="SELECT SUM(a.Height) FROM fac_device a,fac_cabinet b WHERE ParentDevice=0 AND
 			a.Cabinet=b.CabinetID AND a.Status='Reserved' AND b.DataCenterID=$this->DataCenterID and a.Cabinet>0;";
-		$dcStats["Allocated"]=($test=$this->query($sql)->fetchColumn())?$test:0;
-		
-        $dcStats["Available"]=$dcStats["TotalU"] - $dcStats["Occupied"] - $dcStats["Infrastructure"] - $dcStats["Allocated"];
+		$dcStats["Allocated"]=$safeFetchColumn($sql);
+
+		$dcStats["Available"]=$dcStats["TotalU"] - $dcStats["Occupied"] - $dcStats["Infrastructure"] - $dcStats["Allocated"];
 
 		// Perform two queries - one is for the wattage overrides (where NominalWatts > 0) and one for the template (default) values
-		$sql="SELECT SUM(NominalWatts) as TotalWatts FROM fac_device a,fac_cabinet b WHERE 
+		$sql="SELECT SUM(NominalWatts) as TotalWatts FROM fac_device a,fac_cabinet b WHERE
 			a.Cabinet=b.CabinetID AND a.NominalWatts>0 AND a.Cabinet>0 AND
 			b.DataCenterID=$this->DataCenterID;";
-		$dcStats["ComputedWatts"]=($test=$this->query($sql)->fetchColumn())?$test:0;
-		
-		$sql="SELECT SUM(c.Wattage) as TotalWatts FROM fac_device a, fac_cabinet b, 
+		$dcStats["ComputedWatts"]=$safeFetchColumn($sql);
+
+		$sql="SELECT SUM(c.Wattage) as TotalWatts FROM fac_device a, fac_cabinet b,
 			fac_devicetemplate c WHERE a.Cabinet=b.CabinetID AND a.Cabinet>0 AND
-			a.TemplateID=c.TemplateID AND a.NominalWatts=0 AND 
+			a.TemplateID=c.TemplateID AND a.NominalWatts=0 AND
 			b.DataCenterID=$this->DataCenterID;";
-		$dcStats["ComputedWatts"]+=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["ComputedWatts"]+=$safeFetchColumn($sql);
 
 		$sql="SELECT AVG(NULLIF(a.Temperature, 0)) as AvgTemp FROM fac_sensorreadings a, fac_cabinet b, fac_device c
 			WHERE a.DeviceID=c.DeviceID and c.Cabinet=b.CabinetID AND c.BackSide=0 AND
 			b.DataCenterID=$this->DataCenterID;";
-		$dcStats["AvgTemp"]=($test=round($this->query($sql)->fetchColumn()))?$test:0;
-		
+		$val = $safeFetchColumn($sql);
+		$dcStats["AvgTemp"]=($test=round($val))?$test:0;
+
 		$sql="SELECT AVG(NULLIF(a.Humidity, 0)) as AvgHumidity FROM fac_sensorreadings a, fac_cabinet b, fac_device c
 			WHERE a.DeviceID=c.DeviceID and c.BackSide=0 and c.Cabinet=b.CabinetID AND
 			b.DataCenterID=$this->DataCenterID;";
-		$dcStats["AvgHumidity"]=($test=round($this->query($sql)->fetchColumn()))?$test:0;
-		
+		$val = $safeFetchColumn($sql);
+		$dcStats["AvgHumidity"]=($test=round($val))?$test:0;
+
 		$pdu=new PowerDistribution();
 		$dcStats["MeasuredWatts"]=$pdu->GetWattageByDC($this->DataCenterID);
 
 		$sql = "select count(*) from fac_cabinet where DataCenterID=" . intval($this->DataCenterID);
-		$dcStats["TotalCabinets"] = ($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["TotalCabinets"] = $safeFetchColumn($sql);
 
 		$sql = "SELECT SUM(ColCap) FROM `fac_ac` WHERE DataCenterID=$this->DataCenterID;";
-		$dcStats["TotCap"]=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["TotCap"]=$safeFetchColumn($sql);
 
 		$sql = "SELECT TotAmp FROM `fac_powatt` WHERE DataCenterID=$this->DataCenterID;";
-                $dcStats["TotAmp"]=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["TotAmp"]=$safeFetchColumn($sql);
 
 		$sql = "SELECT InputVolt FROM `fac_powatt`WHERE DataCenterID=$this->DataCenterID;";
-		$dcStats["InputVolt"]=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["InputVolt"]=$safeFetchColumn($sql);
 
 		$sql = "SELECT Switchboard FROM `fac_powatt`WHERE DataCenterID=$this->DataCenterID;";
-		$dcStats["Switchboard"]=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["Switchboard"]=$safeFetchColumn($sql);
 
 		$sql = "SELECT PowerPath FROM `fac_powatt`WHERE DataCenterID=$this->DataCenterID;";
-		$dcStats["PowerPath"]=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["PowerPath"]=$safeFetchColumn($sql);
 
 		$sql = "SELECT GenRedund FROM `fac_powatt`WHERE DataCenterID=$this->DataCenterID;";
-		$dcStats["GenRedund"]=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["GenRedund"]=$safeFetchColumn($sql);
 
 		$sql = "SELECT UPSCapacity FROM `fac_powatt`WHERE DataCenterID=$this->DataCenterID;";
-		$dcStats["UPSCapacity"]=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["UPSCapacity"]=$safeFetchColumn($sql);
 
 		$sql = "SELECT UPSRedundancy FROM `fac_powatt`WHERE DataCenterID=$this->DataCenterID;";
-		$dcStats["UPSRedundancy"]=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["UPSRedundancy"]=$safeFetchColumn($sql);
 
 		$sql = "SELECT UPSRuntime FROM `fac_powatt`WHERE DataCenterID=$this->DataCenterID;";
-		$dcStats["UPSRuntime"]=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["UPSRuntime"]=$safeFetchColumn($sql);
 
 		$sql = "SELECT UPSOutput FROM `fac_powatt`WHERE DataCenterID=$this->DataCenterID;";
-		$dcStats["UPSOutput"]=($test=$this->query($sql)->fetchColumn())?$test:0;
+		$dcStats["UPSOutput"]=$safeFetchColumn($sql);
 
-                // We will add query for door when we have completed work on sensor
-                $dcStats["Door"] = "On";
+		// We will add query for door when we have completed work on sensor
+		$dcStats["Door"] = "On";
 		return $dcStats;
 	}
 	
