@@ -163,7 +163,7 @@ echo '<div class="main">
     <div class="form-group">
        <label class="col-sm-5" for="name">',__("Name"),'</label>
        <div class="col-sm-7">        
-       <input type="hidden" name="action" value="query"><select name="PortID" id="PortID" class="form-control">
+       <select name="PortID" id="PortID" class="form-control">
        <option value=0>',__("New Room"),'</option>';
 
             foreach($mfgList as $mfgRow){
