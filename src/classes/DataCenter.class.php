@@ -152,7 +152,8 @@ class DataCenter {
 		// Have to make sure that we delete EVERYTHING and not create orphans
 		// Also, if we are down to the last data center, refuse to delete it
 		$sql = "SELECT COUNT(*) AS Total FROM fac_datacenter;";
-		if ( ! $row = $this->query($sql)->fetch() ) {
+		$result = $this->query($sql);
+		if ( ! $result || ! $row = $result->fetch() ) {
 			return false;
 		}
 		
@@ -237,7 +238,8 @@ class DataCenter {
 		$this->MakeSafe();
 		$sql="SELECT * FROM fac_datacenter WHERE DataCenterID=$this->DataCenterID;";
 
-		if($row=$this->query($sql)->fetch()){
+		$result = $this->query($sql);
+		if($result && $row=$result->fetch()){
 			foreach(DataCenter::RowToObject($row) as $prop => $value){
                                 //print_r($row);exit;
 				$this->$prop=$value;
